@@ -171,18 +171,18 @@ class Network(object):
             
 
 if __name__ == '__main__':
-    Graz_tram = Network(['osm_tram.xml'])
+    Graz_tram = Network(['data/osm_tram.xml'])
     print len(Graz_tram.graph), len(Graz_tram.graph.edges())
     Graz_tram.centralities()
 
     print '########################################################'
     
-    Graz = Network(['osm_tram_bus.xml'])
+    Graz = Network(['data/osm_tram_bus.xml'])
     print len(Graz.graph), len(Graz.graph.edges())
     Graz.centralities()
     
     print '########################################################'
     
-    Graz_complete = Network(['osm_tram_bus.xml', 'osm_sbahn.xml'])
+    Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
     print len(Graz_complete.graph), len(Graz_complete.graph.edges())
     Graz_complete.centralities()
