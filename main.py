@@ -1,122 +1,188 @@
 # -*- coding: utf-8 -*-
 
 
-import pdb
+"""
+Transnet
+2013 Daniel Lamprecht
+daniel.lamprecht@gmx.at
+"""
+
+
+from __future__ import division
 import re
-import urllib2
 import networkx as nx
-import cPickle as pickle
+from math import radians, cos, sin, asin, sqrt
 import operator
-import matplotlib.pyplot as plt
-
-import stops
 
 
+class Node(object):
+    def __init__(self, id, lat, lon, name):
+        self.id = id
+        self.lat = float(lat)
+        self.lon = float(lon)
+        self.name = name
+
+        
 class Network(object):
-    label = ''
-    graphs = None
+    def __init__(self, filenames):
+        """
+        reads in the OSM data and constructs the network (saved in self.graph)
+        """
+        # read data from files
+        data = ''
+        for f in filenames:
+            with open(f) as infile:
+                data += infile.read()
 
-    def __init__(self):
-        pass
+        # extract the nodes
+        name2node = {}
+        id2name = {}
+        nodes = re.findall(r'<node .*? </node>', data, re.DOTALL)
+        re_ill = r'<node id="([0-9]+)" lat="([0-9\.]+)" lon="([0-9\.]+)"'
+        re_name = r'<tag k="name" v="([^"]*)"'
+        for n in nodes:
+            id, lat, lon = re.findall(re_ill, n)[0]
+            name = re.findall(re_name, n)
+            if not name:
+                continue
+            name = name[0]
+            n = Node(id, lat, lon, name)
+            name2node[name] = n
+            id2name[id] = name
 
-    def save(self, graphs):
-        with open(self.label + '.obj', 'wb') as outfile:
-            pickle.dump(graphs, outfile, -1)
+        # Hack to replace some inconsistencies in the OSM data
+        for old, new in [('794705419', '336334047'), ('86096405', '772629261')]:
+            if old in id2name:
+                id2name[new] = id2name[old]
 
-    def load(self):
-        with open(self.label + '.obj', 'rb') as outfile:
-            graphs = pickle.load(outfile)
-        self.graphs = graphs
+        # extract the relations
+        relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
+        self.graph = nx.DiGraph()
+        for rel in relations:
+            title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)
+            if not title:
+                continue
+            title = title[0]
+            skip = False
+            # use only urban bus lines running during daytime
+            # e.g., 30, 34E, 76U, 41/58 are okay
+            # e.g., 230, 250, N5 are not
+            if len(title) > 2:
+                if not 'E' in title and not 'U' in title:
+                    skip = True
+            if 'N' in title:
+                skip = True
+            if len(title.split('/')) == 2 and len(title.split('/')[1]) == 2:
+                skip = False
+            if skip:
+                continue
+
+            # get the stops for each route and build the graph
+            stops = []
+            for line in rel.split('\n'):
+                if '<tag k="route" v="tram"/>' in rel:
+                    keyword = 'role="stop"'
+                else:
+                    keyword = 'role="platform"'
+                if keyword in line:
+                    id = re.findall(r'ref="([0-9]+)', line)[0]
+                    if id in ['458195176']: # OSM inconsistency
+                        continue
+                    stops.append(id)
+            for a, b in zip(stops, stops[1:]):
+                n, m = name2node[id2name[a]], name2node[id2name[b]]
+                self.graph.add_edge(n, m)
 
     def centralities(self):
-        for graph, label in zip(self.graphs, ['tram', 'bus']):
-            print '+++++++++++++++++++++++++++++++++++++++++++++'
-            print label
-            for c in [nx.degree_centrality, nx.closeness_centrality,
-                      nx.betweenness_centrality,
-                      nx.edge_betweenness_centrality,
-                      nx.eigenvector_centrality_numpy, nx.pagerank]:
-                #nodes = c(self.graphs[0])
-                nodes = c(graph)
-                print c.__name__
-                print
-                for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-                                reverse=True)[:5]:
-                    print '%.3f' % n[1], n[0]
-                print '-----------------------------------------'
+        """
+        calculates several centrality measures on the network
+        """
+        for c in [nx.betweenness_centrality, nx.eigenvector_centrality_numpy,
+                  self.beeline, self.beeline_intermediate]:
+            nodes = c(self.graph)
+            print c.__name__
+            print
+            rev = True
+            if c in [self.beeline, self.beeline_intermediate]:
+                rev = False
+            for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
+                            reverse=rev)[:5]:
+                print '%.3f' % n[1], n[0].name
+            print '-----------------------------------------'
+        
+    def beeline(self, graph):
+        """
+        calculates the average beeline between all pairs of stops in the network
+        """
+        nc = {}
+        for n in graph:
+            nc[n] = 0
+            for m in graph:
+                nc[n] += self.geo_dist(n, m)
+        
+        for n in nc:
+            nc[n] /= len(graph)
+        
+        return nc
 
-
-class Vienna(Network):
-    label = 'vienna'
-
-    def __init__(self):
-        pass
-
-
-class Graz(Network):
-    label = 'graz'
-
-    def __init__(self):
-        pass
-
-    def crawl(self):
-        tram_lines = ['1', '3', '4', '5', '6', '7']
-        tram_url = 'http://www.holding-graz.at/linien/fahrplaene/bim/linie-'
-        self.graphs.append(nx.DiGraph())
-        for line in tram_lines:
-            url = tram_url + line + '.html'
-            print line, url
-            data = urllib2.urlopen(url)
-            data = data.read()
-            stops = re.findall(r'#"><strong>([^</]*)', data)
-            stops = [s.strip() for s in stops]
-            stops = [s.decode('utf-8') for s in stops]
-            for s, t in zip(stops, stops[1:]):
-                # trams always use the same stops for both directions
-                self.graphs[-1].add_edge(s, t)
-                self.graphs[-1].add_edge(t, s)
-
-
-        bus_lines = ['E', 'E5', '30', '31', '32', '33', '33E', '34', '34E',
-                     '39', '40', '4153', '48', '50', '52', '53', '58', '60',
-                     '62', '63', '64', '64E', '65', '65E', '67', '67E', '74',
-                     '77', '85']
-        bus_url = 'http://www.holding-graz.at/linien/fahrplaene/bus/linie-'
-        graphs = [nx.Graph(), nx.Graph()]
-
-        # manually add non HGL bus lines
-        graph = graphs[1]
-        #35
-        # TODO: directed lines (Wielandgasse Süd)
-
-        self.save(graphs)
-
-    def load_txt_stops(self):
-        # TODO: find similar sounding stops, à la Don Bosco - Don Bosco Bahnhof
-        tram_graph = nx.DiGraph()
-        for line in stops.tram_stops:
-            for s, t in zip(line, line[1:]):
-                tram_graph.add_edge(s, t)
-
-        bus_graph = nx.DiGraph()
-        bus_graph = tram_graph.copy()
-        for line in stops.bus_stops:
-            for s, t in zip(line, line[1:]):
-                bus_graph.add_edge(s, t)
-
-        self.graphs = [tram_graph, bus_graph]
-
-
-def main():
-    graz = Graz()
-    graz.load_txt_stops()
-    #graz.crawl()
-
-    #graz.load()
-    graz.centralities()
-
-    #nx.draw(graz.graphs[0]); plt.show()
-
+    def beeline_intermediate(self, graph):
+        """
+        similar to self.beeline(), calculates the average beeline between all
+        pairs of stops in the network but instead of calculating the beeline
+        between nodes A and B directly, it calculates the beeline between all
+        intermediate stops, e.g., A-C-D-E-B
+        """
+        nc = {}
+        for n in graph:
+            nc[n] = 0
+            for m in graph:
+                nc[n] += self.geo_dist_sp(n, m)
+        
+        for n in nc:
+            nc[n] /= len(graph)
+        
+        return nc
+        
+    def geo_dist(self, n, m):
+        """
+        calculates the (geodisic) distance between two GPS coordinates
+        """
+        # convert decimal degrees to radians 
+        lon1, lat1, lon2, lat2 = map(radians, [n.lon, n.lat, m.lon, m.lat])
+        # haversine formula 
+        dlon = lon2 - lon1 
+        dlat = lat2 - lat1 
+        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a)) 
+        km = 6367 * c
+        return km * 1000
+        
+    def geo_dist_sp(self, n, m):
+        """
+        like self.geo_dist, calculates the (geodisic) distance between two GPS
+        coordinates but by using all intermediate stops, e.g., not the distance
+        A-B but e.g., A-C-D-E-B
+        """
+        sp = nx.shortest_path(self.graph, n, m)
+        dist = 0
+        for a, b in zip(sp, sp[1:]):
+            dist += self.geo_dist(a, b)
+        return dist            
+            
 
 if __name__ == '__main__':
-    main()
+    Graz_tram = Network(['osm_tram.xml'])
+    print len(Graz_tram.graph), len(Graz_tram.graph.edges())
+    Graz_tram.centralities()
+
+    print '########################################################'
+    
+    Graz = Network(['osm_tram_bus.xml'])
+    print len(Graz.graph), len(Graz.graph.edges())
+    Graz.centralities()
+    
+    print '########################################################'
+    
+    Graz_complete = Network(['osm_tram_bus.xml', 'osm_sbahn.xml'])
+    print len(Graz_complete.graph), len(Graz_complete.graph.edges())
+    Graz_complete.centralities()
