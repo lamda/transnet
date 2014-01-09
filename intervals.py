@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+Transnet
+2013 Daniel Lamprecht
+daniel.lamprecht@gmx.at
+"""
 
 import re
 import pdb

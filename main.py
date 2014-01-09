@@ -21,9 +21,9 @@ from intervals import get_interval
 class Node(object):
     def __init__(self, id, lat, lon, name):
         self.id = id
+        self.name = name
         self.lat = float(lat)
         self.lon = float(lon)
-        self.name = name
 
         
 class Network(object):
