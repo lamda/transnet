@@ -1,7 +1,7 @@
 Transnet
 ==============================
 
-Transnet is tool to analyze data from the public transporation network of Graz, Austria. It loads data from files dumped from OpenStreetMap, constructs a networkx graph and calculates several centrality measures (betweenness centrality, eigenvector centrality, geodesic closeness centrality).
+Transnet is tool to analyze data from the public transit network of Graz, Austria. It loads data from files dumped from OpenStreetMap, constructs a networkx graph and calculates several centrality measures (betweenness centrality, eigenvector centrality, geodesic closeness centrality).
 
 The data was obtained from the OpenStreetMap Overpass Turbo API (http://overpass-turbo.eu/) by first selecting an area that includes Graz and some of its surroundings and then running the following queries:
 
