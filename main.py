@@ -13,14 +13,15 @@ import re
 import networkx as nx
 from math import radians, cos, sin, asin, sqrt
 import operator
+import pdb
 
 
 class Node(object):
     def __init__(self, id, lat, lon, name):
         self.id = id
+        self.name = name
         self.lat = float(lat)
         self.lon = float(lon)
-        self.name = name
 
         
 class Network(object):
@@ -57,12 +58,17 @@ class Network(object):
 
         # extract the relations
         relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
+        titles = []
         self.graph = nx.DiGraph()
         for rel in relations:
             title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)
             if not title:
                 continue
             title = title[0]
+            if title in ['26', '13', '65E', '64E', '33E', '41/53', '58E', '82',
+                         '74E', ]:
+                # ignore a few redundant lines (for the network)
+                continue
             skip = False
             # use only urban bus lines running during daytime
             # e.g., 30, 34E, 76U, 41/58 are okay
@@ -86,12 +92,17 @@ class Network(object):
                     keyword = 'role="platform"'
                 if keyword in line:
                     id = re.findall(r'ref="([0-9]+)', line)[0]
-                    if id in ['458195176']: # OSM inconsistency
+                    if id in ['458195176']:  # OSM inconsistency
                         continue
                     stops.append(id)
             for a, b in zip(stops, stops[1:]):
                 n, m = name2node[id2name[a]], name2node[id2name[b]]
                 self.graph.add_edge(n, m)
+            titles.append(title)
+        #################
+        #print set(titles) -\
+        #set(infections.bus_inputs.keys()) | set(infections.tram_inputs.keys()))
+        #################
 
     def centralities(self):
         """
@@ -171,7 +182,7 @@ class Network(object):
             
 
 if __name__ == '__main__':
-    Graz_tram = Network(['data/osm_tram.xml'])
+    '''Graz_tram = Network(['data/osm_tram.xml'])
     print len(Graz_tram.graph), len(Graz_tram.graph.edges())
     Graz_tram.centralities()
 
@@ -182,7 +193,7 @@ if __name__ == '__main__':
     Graz.centralities()
     
     print '########################################################'
-    
+    '''
     Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
     print len(Graz_complete.graph), len(Graz_complete.graph.edges())
     Graz_complete.centralities()
