@@ -3,7 +3,7 @@
 
 """
 Transnet
-2013 Daniel Lamprecht
+2014 Daniel Lamprecht
 daniel.lamprecht@gmx.at
 """
 
@@ -182,7 +182,7 @@ class Network(object):
             
 
 if __name__ == '__main__':
-    '''Graz_tram = Network(['data/osm_tram.xml'])
+    Graz_tram = Network(['data/osm_tram.xml'])
     print len(Graz_tram.graph), len(Graz_tram.graph.edges())
     Graz_tram.centralities()
 
@@ -193,7 +193,6 @@ if __name__ == '__main__':
     Graz.centralities()
     
     print '########################################################'
-    '''
     Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
     print len(Graz_complete.graph), len(Graz_complete.graph.edges())
     Graz_complete.centralities()
