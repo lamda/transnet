@@ -85,11 +85,12 @@ class Network(object):
 
             # get the stops for each route and build the graph
             stops = []
+            if '<tag k="route" v="tram"/>' in rel:
+                keyword = 'role="stop"'
+            else:
+                keyword = 'role="platform"'
+
             for line in rel.split('\n'):
-                if '<tag k="route" v="tram"/>' in rel:
-                    keyword = 'role="stop"'
-                else:
-                    keyword = 'role="platform"'
                 if keyword in line:
                     id = re.findall(r'ref="([0-9]+)', line)[0]
                     if id in ['458195176']:  # OSM inconsistency
@@ -108,8 +109,12 @@ class Network(object):
         """
         calculates several centrality measures on the network
         """
-        for c in [nx.betweenness_centrality, nx.eigenvector_centrality_numpy,
-                  self.beeline, self.beeline_intermediate]:
+        for c in [
+                  nx.betweenness_centrality, 
+                  nx.eigenvector_centrality_numpy,
+                  self.beeline, 
+                  self.beeline_intermediate
+                  ]:
             nodes = c(self.graph)
             print c.__name__
             print
@@ -156,7 +161,7 @@ class Network(object):
         
     def geo_dist(self, n, m):
         """
-        calculates the (geodisic) distance between two GPS coordinates
+        calculates the (geodesic) distance between two GPS coordinates
         """
         # convert decimal degrees to radians 
         lon1, lat1, lon2, lat2 = map(radians, [n.lon, n.lat, m.lon, m.lat])
@@ -170,7 +175,7 @@ class Network(object):
         
     def geo_dist_sp(self, n, m):
         """
-        like self.geo_dist, calculates the (geodisic) distance between two GPS
+        like self.geo_dist, calculates the (geodesic) distance between two GPS
         coordinates but by using all intermediate stops, e.g., not the distance
         A-B but e.g., A-C-D-E-B
         """
