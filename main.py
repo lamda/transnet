@@ -109,10 +109,12 @@ class Network(object):
         """
         calculates several centrality measures on the network
         """
-        for c in [nx.betweenness_centrality,
-                  nx.eigenvector_centrality_numpy,
-                  self.beeline, 
-                  self.beeline_intermediate]:
+        for c in [
+            nx.betweenness_centrality,
+            nx.eigenvector_centrality_numpy,
+            self.beeline,
+            self.beeline_intermediate,
+        ]:
             nodes = c(self.graph)
             print c.__name__
             print
