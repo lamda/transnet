@@ -8,11 +8,12 @@ daniel.lamprecht@gmx.at
 """
 
 
-from __future__ import division
+from __future__ import division, unicode_literals
 import re
 import networkx as nx
 from math import radians, cos, sin, asin, sqrt
 import operator
+import io
 import pdb
 
 
@@ -29,10 +30,12 @@ class Network(object):
         """
         reads in the OSM data and constructs the network (saved in self.graph)
         """
+        if not filenames:
+            return
         # read data from files
         data = ''
         for f in filenames:
-            with open(f) as infile:
+            with io.open(f, encoding='utf-8') as infile:
                 data += infile.read()
 
         # extract the nodes
@@ -51,7 +54,7 @@ class Network(object):
             name2node[name] = n
             id2name[id] = name
 
-        # Hack to replace some inconsistencies in the OSM data
+        # replace some inconsistencies in the OSM data
         for old, new in [('794705419', '336334047'), ('86096405', '772629261')]:
             if old in id2name:
                 id2name[new] = id2name[old]
@@ -65,9 +68,8 @@ class Network(object):
             if not title:
                 continue
             title = title[0]
-            if title in ['26', '13', '65E', '64E', '33E', '41/53', '58E', '82',
-                         '74E', ]:
-                # ignore a few redundant lines (for the network)
+            if title in ['65E', '64E', '33E', '41/53', '58E', '82', '74E']:
+                # ignore a few redundant lines
                 continue
             skip = False
             # use only urban bus lines running during daytime
@@ -84,26 +86,24 @@ class Network(object):
                 continue
 
             # get the stops for each route and build the graph
-            stops = []
             if '<tag k="route" v="tram"/>' in rel:
-                keyword = 'role="stop"'
+                keyword = 'traveltime'
             else:
                 keyword = 'role="platform"'
 
+            prev = None
             for line in rel.split('\n'):
                 if keyword in line:
-                    id = re.findall(r'ref="([0-9]+)', line)[0]
-                    if id in ['458195176']:  # OSM inconsistency
+                    sid = re.findall(r'ref="([0-9]+)', line)[0]
+                    if sid in ['458195176']:  # OSM inconsistency
                         continue
-                    stops.append(id)
-            for a, b in zip(stops, stops[1:]):
-                n, m = name2node[id2name[a]], name2node[id2name[b]]
-                self.graph.add_edge(n, m)
+                    if prev:
+                        traveltime=re.findall(r'traveltime="([0-9]+)"', line)[0]
+                        self.graph.add_edge(name2node[id2name[sid]],
+                                            name2node[id2name[prev]],
+                                            weight=int(traveltime))
+                    prev = sid
             titles.append(title)
-        #################
-        #print set(titles) -\
-        #set(infections.bus_inputs.keys()) | set(infections.tram_inputs.keys()))
-        #################
 
     def centralities(self):
         """
@@ -111,13 +111,14 @@ class Network(object):
         """
         for c in [nx.betweenness_centrality,
                   nx.eigenvector_centrality_numpy,
-                  self.beeline, 
-                  self.beeline_intermediate]:
+                  self.beeline,
+                  self.beeline_intermediate,
+                  self.travel_time]:
             nodes = c(self.graph)
             print c.__name__
             print
             rev = True
-            if c in [self.beeline, self.beeline_intermediate]:
+            if c in [self.beeline, self.beeline_intermediate, self.travel_time]:
                 rev = False
             for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
                             reverse=rev)[:5]:
@@ -182,20 +183,93 @@ class Network(object):
         for a, b in zip(sp, sp[1:]):
             dist += self.geo_dist(a, b)
         return dist            
-            
+
+    def travel_time(self, graph):
+        nc = {}
+        for n in graph:
+            nc[n] = 0
+            for m in graph:
+                if n == m:
+                    continue
+                nc[n] += nx.dijkstra_path_length(graph, n, m)
+        for n in nc:
+            nc[n] /= len(graph)
+
+        return nc
+
+
+def preprocess(f):
+    print 'Caution!\n'
+    return
+
+    with io.open(f, encoding='utf-8') as infile:
+        data = infile.read()
+    name2node = {}
+    id2name = {}
+
+    header = re.findall(r'<\?xml.*?/>', data, re.DOTALL)[0]
+    nodes = re.findall(r'<node .*? </node>', data, re.DOTALL)
+    re_ill = r'<node id="([0-9]+)" lat="([0-9\.]+)" lon="([0-9\.]+)"'
+    re_name = r'<tag k="name" v="([^"]*)"'
+    for n in nodes:
+        id, lat, lon = re.findall(re_ill, n)[0]
+        name = re.findall(re_name, n)
+        if not name:
+            continue
+        name = name[0]
+        name2node[name] = n
+        id2name[id] = name
+    # replace some inconsistencies in the OSM data
+    for old, new in [('794705419', '336334047'), ('86096405', '772629261')]:
+        if old in id2name:
+            id2name[new] = id2name[old]
+
+    relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
+    resolved_relations = {}
+    for rel in relations:
+        title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)[0]
+        if not title:
+            continue
+        lines = rel.splitlines()
+        text = [lines[0]]
+        tags = [l for l in lines if '<tag' in l]
+        for t in tags:
+            text.append(t)
+        stops = [l for l in lines if 'role="stop"' in l]  # TODO: this works only for streetcars
+        for s in stops:
+            sid = re.findall(r'ref="([0-9]+)"', s)[0]
+            start =  s.replace('role="stop"/>', '')
+            text.append(start + ' name="' + id2name[sid] + '" traveltime="1"/>')
+        if title not in resolved_relations:
+            resolved_relations[title] = '  <!-- ' + title + ' -->\n'
+        resolved_relations[title] += '  ' + '\n'.join(text) + '\n  </relation>\n'
+
+    f_resolved = f.split('.')[0] + '_resolved.xml'
+    with io.open(f_resolved, 'w', encoding='utf-8') as outfile:
+        outfile.write(header + '\n')
+        for n in nodes:
+            outfile.write('  ' + n + '\n')
+        outfile.write('\n')
+        for r in sorted(resolved_relations.keys()):
+            outfile.write(resolved_relations[r] + '\n')
+        outfile.write('</osm>\n')
+
 
 if __name__ == '__main__':
-    Graz_tram = Network(['data/osm_tram.xml'])
+
+    # preprocess('data/osm_tram.xml')
+
+    Graz_tram = Network(['data/osm_tram_traveltimes.xml'])
     print len(Graz_tram.graph), len(Graz_tram.graph.edges())
     Graz_tram.centralities()
 
-    print '########################################################'
-    
-    Graz = Network(['data/osm_tram_bus.xml'])
-    print len(Graz.graph), len(Graz.graph.edges())
-    Graz.centralities()
-    
-    print '########################################################'
-    Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
-    print len(Graz_complete.graph), len(Graz_complete.graph.edges())
-    Graz_complete.centralities()
+    # print '########################################################'
+    #
+    # Graz = Network(['data/osm_tram_bus.xml'])
+    # print len(Graz.graph), len(Graz.graph.edges())
+    # Graz.centralities()
+    #
+    # print '########################################################'
+    # Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
+    # print len(Graz_complete.graph), len(Graz_complete.graph.edges())
+    # Graz_complete.centralities()
