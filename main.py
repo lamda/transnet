@@ -10,19 +10,23 @@ daniel.lamprecht@gmx.at
 
 from __future__ import division, unicode_literals
 import re
-import networkx as nx
+from collections import defaultdict
+import copy
 from math import radians, cos, sin, asin, sqrt
 import operator
 import io
 import pdb
 
+import networkx as nx
+
 
 class Node(object):
-    def __init__(self, id, lat, lon, name):
+    def __init__(self, id, lat, lon, name, interval=None):
         self.id = id
         self.name = name
         self.lat = float(lat)
         self.lon = float(lon)
+        self.interval = interval
 
         
 class Network(object):
@@ -61,8 +65,8 @@ class Network(object):
 
         # extract the relations
         relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
-        titles = []
         self.graph = nx.DiGraph()
+        rel2interval = defaultdict(unicode)
         for rel in relations:
             title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)
             if not title:
@@ -91,19 +95,46 @@ class Network(object):
             else:
                 keyword = 'role="platform"'
 
-            prev = None
+            n_from = None
             for line in rel.split('\n'):
                 if keyword in line:
                     sid = re.findall(r'ref="([0-9]+)', line)[0]
                     if sid in ['458195176']:  # OSM inconsistency
                         continue
-                    if prev:
-                        traveltime=re.findall(r'traveltime="([0-9]+)"', line)[0]
-                        self.graph.add_edge(name2node[id2name[sid]],
-                                            name2node[id2name[prev]],
-                                            weight=int(traveltime))
-                    prev = sid
-            titles.append(title)
+                    n_to = copy.deepcopy(name2node[id2name[sid]])
+                    n_to.name += ' (' + title + ')'
+                    if n_from:
+                        traveltime = re.findall(r'traveltime="([0-9]+)"', line)
+                        traveltime = int(traveltime[0])
+                        suffix = ' (' + title + ')'
+                        self.graph.add_edge(n_from, n_to, weight=traveltime)
+                    n_from = n_to
+
+            schedule = re.findall(r'<schedule>(.*?)</schedule>', rel)[0]
+            rel2interval[title] += schedule + ' '
+
+        # add transfer edges to the graph
+        # e.g., Jakominiplatz (1) --> Jakominiplatz (3)
+        # edge weight: expected transfer time
+
+        for r, s in rel2interval.items():
+            # expected transfer time is half the interval
+            rel2interval[r] = 60 / (len(s.split()) / 2) / 2
+
+        node2lnode = defaultdict(list)
+        for n in self.graph:
+            line = n.name[n.name.rfind('('):].strip('( )')
+            name = n.name[:n.name.rfind('(')][:-1]
+            n.interval = rel2interval[line]
+            node2lnode[name].append(n)
+
+        for k, v in node2lnode.items():
+            for n in v:
+                for m in v:
+                    if n == m:
+                        continue
+                    self.graph.add_edge(n, m, weight=m.interval)
+
 
     def centralities(self):
         """
@@ -121,7 +152,7 @@ class Network(object):
             if c in [self.beeline, self.beeline_intermediate, self.travel_time]:
                 rev = False
             for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-                            reverse=rev)[:5]:
+                            reverse=rev)[:15]:
                 print '%.3f' % n[1], n[0].name
             print '-----------------------------------------'
         
@@ -193,6 +224,7 @@ class Network(object):
                     continue
                 nc[n] += nx.dijkstra_path_length(graph, n, m)
         for n in nc:
+            nc[n] += n.interval
             nc[n] /= len(graph)
 
         return nc

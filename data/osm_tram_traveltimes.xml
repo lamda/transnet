@@ -1005,6 +1005,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Mariatrost"/>
     <tag k="type" v="route"/>
+    <schedule>03 13 23 33 43 50 51 54 58</schedule>
     <member type="node" ref="263294584"  name="Eggenberg/UKH" traveltime="1"/>
     <member type="node" ref="772610760"  name="Alt-Eggenberg" traveltime="1"/>
     <member type="node" ref="287026786"  name="Schloß Eggenberg" traveltime="1"/>
@@ -1046,6 +1047,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Eggenberg/UKH"/>
     <tag k="type" v="route"/>
+    <schedule>01 09 19 29 39 49 59</schedule>
     <member type="node" ref="224426955"  name="Mariatrost" traveltime="1"/>
     <member type="node" ref="86096406"  name="Tannhof" traveltime="1"/>
     <member type="node" ref="224426899"  name="Teichhof" traveltime="1"/>
@@ -1089,6 +1091,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Krenngasse"/>
     <tag k="type" v="route"/>
+    <schedule>00 06 12 18 24 31 38 46 53</schedule>
     <member type="node" ref="2078703844"  name="Laudongasse" traveltime="1"/>
     <member type="node" ref="1260655611"  name="Waagner-Biro-Straße/PVA" traveltime="2"/>
     <member type="node" ref="2031511649"  name="Hauptbahnhof" traveltime="2"/>
@@ -1112,6 +1115,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Laudongasse"/>
     <tag k="type" v="route"/>
+    <schedule>01 08 10 16 23 31 38 40 46 53</schedule>
     <member type="node" ref="263871426"  name="Krenngasse" traveltime="1"/>
     <member type="node" ref="1987495312"  name="Schillerplatz" traveltime="1"/>
     <member type="node" ref="21140812"  name="Herz-Jesu-Kirche" traveltime="1"/>
@@ -1137,6 +1141,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Liebenau/Murpark"/>
     <tag k="type" v="route"/>
+    <schedule>07 14 22 32 42 45 52</schedule>
     <member type="node" ref="263494159"  name="Andritz" traveltime="1"/>
     <member type="node" ref="1988746231"  name="Grazer Straße" traveltime="1"/>
     <member type="node" ref="263494322"  name="Maut Andritz" traveltime="2"/>
@@ -1171,6 +1176,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Andritz"/>
     <tag k="type" v="route"/>
+    <schedule>06 13 21 29 37 45 55</schedule>
     <member type="node" ref="35124921"  name="Liebenau" traveltime="1"/>
     <member type="node" ref="35124930"  name="P+R Murpark" traveltime="1"/>
     <member type="node" ref="35124994"  name="Karl-Huber-Gasse" traveltime="1"/>
@@ -1207,6 +1213,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Puntigam"/>
     <tag k="type" v="route"/>
+    <schedule>03 10 18 27 37 47 49 57</schedule>
     <member type="node" ref="263494159"  name="Andritz" traveltime="1"/>
     <member type="node" ref="1988746231"  name="Grazer Straße" traveltime="1"/>
     <member type="node" ref="263494322"  name="Maut Andritz" traveltime="2"/>
@@ -1243,6 +1250,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Andritz"/>
     <tag k="type" v="route"/>
+    <schedule>06 13 21 28 36 46 56</schedule>
     <member type="node" ref="35668970"  name="Puntigam Bahnhof" traveltime="1"/>
     <member type="node" ref="35668985"  name="Brauhaus Puntigam" traveltime="1"/>
     <member type="node" ref="1989399524"  name="Maut Puntigam" traveltime="2"/>
@@ -1281,6 +1289,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="St. Peter"/>
     <tag k="type" v="route"/>
+    <schedule>03 09 15 21 27 34 42 49 57</schedule>
     <member type="node" ref="1988392666"  name="Laudongasse" traveltime="1"/>
     <member type="node" ref="1260655611"  name="Waagner-Biro-Straße/PVA" traveltime="2"/>
     <member type="node" ref="2031511649"  name="Hauptbahnhof" traveltime="2"/>
@@ -1308,6 +1317,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Laudongasse"/>
     <tag k="type" v="route"/>
+    <schedule>03 09 15 20 26 34 42 49 51 57</schedule>
     <member type="node" ref="274088293"  name="St. Peter" traveltime="1"/>
     <member type="node" ref="1988313821"  name="Prof.-Franz-Spath-Ring" traveltime="1"/>
     <member type="node" ref="1988305299"  name="Breitenweg" traveltime="1"/>
@@ -1337,6 +1347,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="St. Leonhard/LKH"/>
     <tag k="type" v="route"/>
+    <schedule>03 07 11 16 21 26 31 36 41 47 53 59</schedule>
     <member type="node" ref="263297988"  name="Wetzelsdorf" traveltime="1"/>
     <member type="node" ref="772610799"  name="Handelstraße" traveltime="1"/>
     <member type="node" ref="772610752"  name="Johann-Haiden-Straße" traveltime="1"/>
@@ -1369,6 +1380,7 @@
     <tag k="route" v="tram"/>
     <tag k="to" v="Wetzelsdorf"/>
     <tag k="type" v="route"/>
+    <schedule>03 08 14 20 24 28 32 36 40 44 50 56</schedule>
     <member type="node" ref="266012388"  name="St. Leonhard/LKH" traveltime="1"/>
     <member type="node" ref="21413815"  name="Odilien-Institut" traveltime="1"/>
     <member type="node" ref="1988217308"  name="Reiterkaserne" traveltime="2"/>
