@@ -15,9 +15,17 @@ import copy
 from math import radians, cos, sin, asin, sqrt
 import operator
 import io
+import datetime
 import pdb
 
 import networkx as nx
+
+
+def debug_iter(items, n=100):
+    for index, item in enumerate(items):
+        if index % n == 0:
+            print datetime.datetime.now(), index+1, '/', len(items)
+        yield item
 
 
 class Node(object):
@@ -116,7 +124,6 @@ class Network(object):
         # add transfer edges to the graph
         # e.g., Jakominiplatz (1) --> Jakominiplatz (3)
         # edge weight: expected transfer time
-
         for r, s in rel2interval.items():
             # expected transfer time is half the interval
             rel2interval[r] = 60 / (len(s.split()) / 2) / 2
@@ -135,27 +142,40 @@ class Network(object):
                         continue
                     self.graph.add_edge(n, m, weight=m.interval)
 
-
     def centralities(self):
         """
         calculates several centrality measures on the network
         """
-        for c in [nx.betweenness_centrality,
-                  nx.eigenvector_centrality_numpy,
-                  self.beeline,
-                  self.beeline_intermediate,
+        for c in [#nx.betweenness_centrality,
+                  #nx.eigenvector_centrality_numpy,
+                  #self.beeline,
+                  #self.beeline_intermediate,
                   self.travel_time]:
             nodes = c(self.graph)
             print c.__name__
             print
             rev = True
+            topN = 25
             if c in [self.beeline, self.beeline_intermediate, self.travel_time]:
                 rev = False
             for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-                            reverse=rev)[:15]:
+                            reverse=rev)[:topN]:
                 print '%.3f' % n[1], n[0].name
             print '-----------------------------------------'
-        
+
+            #    for several stops sharing a name, take only the maximum
+            #    restructure the dictionary accordingly
+            d = defaultdict(float)
+            for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
+                            reverse=rev):
+                stop = n[0].name[:n[0].name.rfind('(')].strip()
+                if d[stop] < n[1]:
+                    d[stop] = n[1]
+            for k, v in sorted(d.iteritems(), key=operator.itemgetter(1),
+                               reverse=rev)[:topN]:
+                print '%.3f' % v, k
+            print '-----------------------------------------'
+
     def beeline(self, graph):
         """
         calculates the average beeline between all pairs of stops in the network
@@ -217,12 +237,11 @@ class Network(object):
 
     def travel_time(self, graph):
         nc = {}
-        for n in graph:
+        for n in debug_iter(graph, 1):
             nc[n] = 0
             for m in graph:
-                if n == m:
-                    continue
-                nc[n] += nx.dijkstra_path_length(graph, n, m)
+                if n != m:
+                    nc[n] += nx.dijkstra_path_length(graph, n, m)
         for n in nc:
             nc[n] += n.interval
             nc[n] /= len(graph)
@@ -267,7 +286,7 @@ def preprocess(f):
         tags = [l for l in lines if '<tag' in l]
         for t in tags:
             text.append(t)
-        stops = [l for l in lines if 'role="stop"' in l]  # TODO: this works only for streetcars
+        stops = [l for l in lines if 'role="stop"' in l]  # TODO: this works only for trams
         for s in stops:
             sid = re.findall(r'ref="([0-9]+)"', s)[0]
             start =  s.replace('role="stop"/>', '')
