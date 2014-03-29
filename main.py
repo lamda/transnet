@@ -155,16 +155,16 @@ class Network(object):
             print c.__name__
             print
             rev = True
-            topN = 25
+            topn = 25
             if c in [self.beeline, self.beeline_intermediate, self.travel_time]:
                 rev = False
             for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-                            reverse=rev)[:topN]:
+                            reverse=rev)[:topn]:
                 print '%.3f' % n[1], n[0].name
             print '-----------------------------------------'
 
-            #    for several stops sharing a name, take only the maximum
-            #    restructure the dictionary accordingly
+            #  for several stops sharing a name, take only the maximum
+            #  restructure the dictionary accordingly
             d = defaultdict(float)
             for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
                             reverse=rev):
@@ -172,7 +172,7 @@ class Network(object):
                 if d[stop] < n[1]:
                     d[stop] = n[1]
             for k, v in sorted(d.iteritems(), key=operator.itemgetter(1),
-                               reverse=rev)[:topN]:
+                               reverse=rev)[:topn]:
                 print '%.3f' % v, k
             print '-----------------------------------------'
 
@@ -238,16 +238,20 @@ class Network(object):
     def travel_time(self, graph):
         nc = {}
         for n in debug_iter(graph, 1):
-            nc[n] = 0
-            for m in graph:
-                if n != m:
-                    nc[n] += nx.dijkstra_path_length(graph, n, m)
+            distances = nx.single_source_dijkstra_path_length(self.graph, n)
+            nc[n] = self.sum_filter_stops(distances)
         for n in nc:
             nc[n] += n.interval
-            nc[n] /= len(graph)
-
+            # nc[n] /= len(graph)
         return nc
 
+    def sum_filter_stops(self, dists):
+        d = {}
+        for k, v in dists.items():
+            stop = k.name[:k.name.rfind('(')].strip()
+            if not stop in d or d[stop] > v:
+                d[stop] = v
+        return sum(d.values())
 
 def preprocess(f):
     print 'Caution!\n'
