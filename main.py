@@ -143,22 +143,23 @@ class Network(object):
         """
         calculates several centrality measures on the network
         """
-        for c in [#nx.betweenness_centrality,
-                  #nx.eigenvector_centrality_numpy,
-                  #self.beeline,
-                  #self.beeline_intermediate,
-                  self.travel_time]:
+        for c in [
+            #nx.betweenness_centrality,
+            #nx.eigenvector_centrality_numpy,
+            self.beeline,
+            #self.beeline_intermediate,
+            self.travel_time
+        ]:
             nodes = c(self.graph)
             print c.__name__
-            print
             rev = True
-            topn = 25
+            topn = 20
             if c in [self.beeline, self.beeline_intermediate, self.travel_time]:
                 rev = False
-            for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-                            reverse=rev)[:topn]:
-                print '%.3f' % n[1], n[0].name
-            print '-----------------------------------------'
+            # for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
+            #                 reverse=rev)[:topn]:
+            #     print '%.3f' % n[1], n[0].name
+            # print '-----------------------------------------'
 
             #  for several stops sharing a name, take only the maximum
             #  restructure the dictionary accordingly
@@ -168,10 +169,11 @@ class Network(object):
                 stop = n[0].name[:n[0].name.rfind('(')].strip()
                 if d[stop] < n[1]:
                     d[stop] = n[1]
+
             for k, v in sorted(d.iteritems(), key=operator.itemgetter(1),
                                reverse=rev)[:topn]:
                 print '%.3f' % v, k
-            print '-----------------------------------------'
+            print '-----------------------------------------\n'
 
     def beeline(self, graph):
         """
@@ -196,7 +198,7 @@ class Network(object):
         intermediate stops, e.g., A-C-D-E-B
         """
         nc = {}
-        for n in graph:
+        for n in debug_iter(graph, 1):
             nc[n] = 0
             for m in graph:
                 nc[n] += self.geo_dist_sp(n, m)
@@ -239,7 +241,7 @@ class Network(object):
             nc[n] = self.sum_filter_stops(distances)
         for n in nc:
             nc[n] += n.interval
-            # nc[n] /= len(graph)
+            nc[n] /= len(graph)
         return nc
 
     def sum_filter_stops(self, dists):
@@ -253,9 +255,6 @@ class Network(object):
 
 
 def preprocess(f):
-    # print 'Caution!\n'
-    # return
-
     if 'tram' in f:
         role = 'stop'
     else:
@@ -335,20 +334,10 @@ if __name__ == '__main__':
     # preprocess('data/osm_bus.xml')
     # preprocess('data/osm_sbahn.xml')
 
-    # Graz_tram = Network(['data/osm_tram_traveltimes.xml'])
-    # print len(Graz_tram.graph), len(Graz_tram.graph.edges())
-    # Graz_tram.centralities()
-
-    # print '########################################################'
-    #
-    # Graz = Network(['data/osm_tram_traveltimes.xml',
-    #                 'data/osm_bus_traveltimes.xml'])
-    # print len(Graz.graph), len(Graz.graph.edges())
-    # Graz.centralities()
-
-    # print '########################################################'
-    Graz_complete = Network(['data/osm_tram_traveltimes.xml',
-                             'data/osm_bus_traveltimes.xml',
-                             'data/osm_sbahn_traveltimes.xml'])
-    print len(Graz_complete.graph), len(Graz_complete.graph.edges())
-    Graz_complete.centralities()
+    Graz = Network([
+        'data/osm_tram_traveltimes.xml',
+        'data/osm_bus_traveltimes.xml',
+        'data/osm_sbahn_traveltimes.xml'
+    ])
+    print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges\n'
+    Graz.centralities()
