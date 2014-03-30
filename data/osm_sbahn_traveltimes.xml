@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Overpass API">
+<note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
+<meta osm_base="2013-11-14T19:59:01Z"/>
+  <node id="25528225" lat="47.1293102" lon="15.3228869" version="4" timestamp="2013-09-28T13:55:00Z" changeset="18076876" uid="58410" user="tlacuilo">
+    <tag k="name" v="Gratwein-Gratkorn"/>
+    <tag k="railway" v="station"/>
+    <tag k="uic_ref" v="8100370"/>
+  </node>
+  <node id="25528260" lat="47.0724824" lon="15.4166695" version="7" timestamp="2013-10-27T11:54:48Z" changeset="18564723" uid="137823" user="RolandS">
+    <tag k="name" v="Hauptbahnhof"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="railway" v="station"/>
+    <tag k="railway:ref" v="G"/>
+    <tag k="uic_name" v="Graz Hbf"/>
+    <tag k="uic_ref" v="8100173"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="33042033" lat="47.0308744" lon="15.4292611" version="5" timestamp="2013-01-02T06:30:21Z" changeset="14495186" uid="290680" user="wheelmap_visitor">
+    <tag k="name" v="Puntigam Bahnhof"/>
+    <tag k="railway" v="station"/>
+    <tag k="uic_name" v="Graz Puntigam"/>
+    <tag k="uic_ref" v="8101398"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="33042040" lat="47.0583621" lon="15.4191660" version="10" timestamp="2013-01-24T15:44:05Z" changeset="14770260" uid="137823" user="RolandS">
+    <tag k="name" v="Don Bosco"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Don Bosco"/>
+    <tag k="uic_ref" v="8178420"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="35526636" lat="47.0536486" lon="15.4480241" version="7" timestamp="2013-09-11T12:56:56Z" changeset="17782630" uid="321042" user="species">
+    <tag k="name" v="Ostbahnhof"/>
+    <tag k="old_name" v="Graz Ostbahnhof"/>
+    <tag k="railway" v="station"/>
+    <tag k="uic_name" v="Graz Ostbf"/>
+    <tag k="uic_ref" v="8100371"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="35829940" lat="46.9979922" lon="15.4494767" version="11" timestamp="2012-09-04T19:34:44Z" changeset="12976929" uid="290680" user="wheelmap_visitor">
+    <tag k="electrified" v="contact_line"/>
+    <tag k="gauge" v="1435"/>
+    <tag k="name" v="Flughafen Graz-Feldkirchen"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Flughafen Graz-Feldkirchen"/>
+    <tag k="uic_ref" v="8100601"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="45081996" lat="47.0678360" lon="15.4130994" version="8" timestamp="2012-10-07T22:19:52Z" changeset="13405757" uid="321042" user="species">
+    <tag k="addr:city" v="Graz"/>
+    <tag k="addr:country" v="AT"/>
+    <tag k="addr:housenumber" v="35-41"/>
+    <tag k="addr:postcode" v="8020"/>
+    <tag k="addr:street" v="Köflacher Gasse"/>
+    <tag k="name" v="Köflacherbahnhof"/>
+    <tag k="railway" v="station"/>
+    <tag k="uic_name" v="Graz Köflacherbahnhof"/>
+    <tag k="uic_ref" v="8100843"/>
+  </node>
+  <node id="49192585" lat="47.0760908" lon="15.4367472" version="6" timestamp="2012-03-16T13:17:24Z" changeset="10998221" uid="220941" user="hasi84">
+    <tag k="name" v="Schloßbergbahn Bergstation"/>
+    <tag k="railway" v="halt"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="49192593" lat="47.0748754" lon="15.4350822" version="7" timestamp="2012-08-09T12:52:00Z" changeset="12668187" uid="321042" user="species">
+    <tag k="name" v="Schloßbergbahn"/>
+    <tag k="railway" v="halt"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="256755541" lat="47.0508681" lon="15.4016527" version="6" timestamp="2012-05-14T02:53:18Z" changeset="11592092" uid="56501" user="Rudolf_H">
+    <tag k="name" v="Graz Wetzelsdorf"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Wetzelsdorf"/>
+    <tag k="uic_ref" v="8100905"/>
+  </node>
+  <node id="256755544" lat="47.0325613" lon="15.4058896" version="5" timestamp="2011-04-14T13:19:27Z" changeset="7860910" uid="321042" user="species">
+    <tag k="name" v="Graz Webling"/>
+    <tag k="public_transport" v="stop_position"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Webling"/>
+    <tag k="uic_ref" v="8100883"/>
+  </node>
+  <node id="256755554" lat="47.0201591" lon="15.4054983" version="4" timestamp="2013-10-01T13:08:19Z" changeset="18126961" uid="58410" user="tlacuilo">
+    <tag k="name" v="Straßgang"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Straßgang"/>
+    <tag k="uic_ref" v="8101507"/>
+  </node>
+  <node id="299230715" lat="47.1184926" lon="15.3438317" version="6" timestamp="2013-09-28T14:21:22Z" changeset="18077492" uid="58410" user="tlacuilo">
+    <tag k="name" v="Judendorf-Straßengel"/>
+    <tag k="railway" v="station"/>
+    <tag k="uic_ref" v="8101011"/>
+  </node>
+  <node id="301708452" lat="47.0123430" lon="15.4406779" version="6" timestamp="2013-01-24T15:44:06Z" changeset="14770260" uid="137823" user="RolandS">
+    <tag k="name" v="Feldkirchen-Seiersberg"/>
+    <tag k="railway" v="halt"/>
+  </node>
+  <node id="338960832" lat="47.0301400" lon="15.4962717" version="4" timestamp="2011-03-31T16:20:52Z" changeset="7727245" uid="42123" user="Ropino">
+    <tag k="name" v="Raaba"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_ref" v="8100193"/>
+  </node>
+  <node id="359586457" lat="47.0578118" lon="15.4200313" version="11" timestamp="2013-01-24T15:44:07Z" changeset="14770260" uid="137823" user="RolandS">
+    <tag k="name" v="Graz Don Bosco"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Don Bosco"/>
+    <tag k="uic_ref" v="8178420"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="921201381" lat="47.0418426" lon="15.5074678" version="1" timestamp="2010-09-22T10:26:49Z" changeset="5844190" uid="56870" user="StefanTiran">
+    <tag k="name" v="Hart bei Graz"/>
+    <tag k="railway" v="halt"/>
+  </node>
+  <node id="1227763152" lat="47.0577706" lon="15.4199899" version="2" timestamp="2013-01-24T15:44:07Z" changeset="14770260" uid="137823" user="RolandS">
+    <tag k="name" v="Graz Don Bosco"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Don Bosco"/>
+    <tag k="uic_ref" v="8178420"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="1228424823" lat="47.0583521" lon="15.4191003" version="2" timestamp="2013-01-24T15:44:06Z" changeset="14770260" uid="137823" user="RolandS">
+    <tag k="name" v="Graz Don Bosco"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Graz Don Bosco"/>
+    <tag k="uic_ref" v="8178420"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="1228431799" lat="47.0123359" lon="15.4406193" version="2" timestamp="2013-01-24T15:44:06Z" changeset="14770260" uid="137823" user="RolandS">
+    <tag k="name" v="Feldkirchen-Seiersberg"/>
+    <tag k="railway" v="halt"/>
+  </node>
+  <node id="1362117623" lat="46.9979696" lon="15.4494167" version="2" timestamp="2012-09-04T19:34:45Z" changeset="12976929" uid="290680" user="wheelmap_visitor">
+    <tag k="name" v="Flughafen Graz-Feldkirchen"/>
+    <tag k="railway" v="halt"/>
+    <tag k="uic_name" v="Flughafen Graz-Feldkirchen"/>
+    <tag k="uic_ref" v="8100601"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="2406347872" lat="47.0400223" lon="15.4625952" version="1" timestamp="2013-08-03T20:17:36Z" changeset="17208151" uid="444129" user="ManfredBrandl">
+    <tag k="name" v="Graz Liebenau-Murpark"/>
+    <tag k="railway" v="station"/>
+    <tag k="start_date" v="2013-12-15"/>
+  </node>
+
+  <!-- S1 -->
+  <relation id="50623" version="73" timestamp="2013-11-02T09:28:04Z" changeset="18671812" uid="45347" user="eriosw">
+    <tag k="from" v="Graz Hbf"/>
+    <tag k="network" v="S-Bahn Steiermark"/>
+    <tag k="note" v="bei network unklar, ob das nicht &quot;Verbund Linie&quot; lauten sollte (eher nicht, da die VL nur etwas über den Tarif aussagt...)"/>
+    <tag k="ref" v="S1"/>
+    <tag k="route" v="train"/>
+    <tag k="to" v="Bruck/Mur"/>
+    <tag k="type" v="route"/>
+    <schedule>08</schedule>
+    <member type="node" ref="25528260"  name="Hauptbahnhof" traveltime="1"/>
+    <member type="node" ref="299230715"  name="Judendorf-Straßengel" traveltime="8"/>
+  </relation>
+  <relation id="506231" version="73" timestamp="2013-11-02T09:28:04Z" changeset="18671812" uid="45347" user="eriosw">
+    <tag k="from" v="Graz Hbf"/>
+    <tag k="network" v="S-Bahn Steiermark"/>
+    <tag k="note" v="bei network unklar, ob das nicht &quot;Verbund Linie&quot; lauten sollte (eher nicht, da die VL nur etwas über den Tarif aussagt...)"/>
+    <tag k="ref" v="S1"/>
+    <tag k="route" v="train"/>
+    <tag k="to" v="Bruck/Mur"/>
+    <tag k="type" v="route"/>
+    <schedule>03 18 33 48</schedule>
+    <member type="node" ref="299230715"  name="Judendorf-Straßengel" traveltime="1"/>
+    <member type="node" ref="25528260"  name="Hauptbahnhof" traveltime="8"/>
+  </relation>
+
+  <!-- S3 -->
+  <relation id="1319747" version="24" timestamp="2013-09-29T14:54:00Z" changeset="18093374" uid="58410" user="tlacuilo">
+    <tag k="operator" v="ÖBB"/>
+    <tag k="ref" v="S3"/>
+    <tag k="route" v="train"/>
+    <tag k="type" v="route"/>
+    <schedule>08</schedule>
+    <member type="node" ref="25528260"  name="Hauptbahnhof" traveltime="1"/>
+    <member type="node" ref="33042040"  name="Don Bosco" traveltime="3"/>
+    <member type="node" ref="35526636"  name="Ostbahnhof" traveltime="5"/>
+    <member type="node" ref="2406347872" name="Murpark" traveltime="2"/>
+    <member type="node" ref="338960832"  name="Raaba" traveltime="4"/>
+  </relation>
+  <relation id="13197471" version="24" timestamp="2013-09-29T14:54:00Z" changeset="18093374" uid="58410" user="tlacuilo">
+    <tag k="operator" v="ÖBB"/>
+    <tag k="ref" v="S3"/>
+    <tag k="route" v="train"/>
+    <tag k="type" v="route"/>
+    <schedule>09 18 34</schedule>
+    <member type="node" ref="338960832"  name="Raaba" traveltime="1"/>
+    <member type="node" ref="2406347872" name="Murpark" traveltime="4"/>    
+    <member type="node" ref="35526636"  name="Ostbahnhof" traveltime="3"/>
+    <member type="node" ref="33042040"  name="Don Bosco" traveltime="4"/>
+    <member type="node" ref="25528260"  name="Hauptbahnhof" traveltime="4"/>
+  </relation>
+
+  <!-- S5 -->
+  <relation id="67185" version="78" timestamp="2013-09-26T18:48:11Z" changeset="18049965" uid="58410" user="tlacuilo">
+    <tag k="name" v="Südbahn"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="ref" v="S5"/>
+    <tag k="route" v="train"/>
+    <tag k="type" v="route"/>
+    <schedule>08 38</schedule>
+    <member type="node" ref="25528260"  name="Hauptbahnhof" traveltime="1"/>
+    <member type="node" ref="33042040"  name="Don Bosco" traveltime="4"/>
+    <member type="node" ref="33042033"  name="Puntigam Bahnhof" traveltime="3"/>
+    <member type="node" ref="301708452"  name="Feldkirchen-Seiersberg" traveltime="3"/>
+    <member type="node" ref="35829940"  name="Flughafen Graz-Feldkirchen" traveltime="2"/>
+  </relation>
+  <relation id="671851" version="78" timestamp="2013-09-26T18:48:11Z" changeset="18049965" uid="58410" user="tlacuilo">
+    <tag k="name" v="Südbahn"/>
+    <tag k="operator" v="ÖBB"/>
+    <tag k="ref" v="S5"/>
+    <tag k="route" v="train"/>
+    <tag k="type" v="route"/>
+    <schedule>03 13 33 48</schedule>
+    <member type="node" ref="35829940"  name="Flughafen Graz-Feldkirchen" traveltime="1"/>
+    <member type="node" ref="301708452"  name="Feldkirchen-Seiersberg" traveltime="2"/>
+    <member type="node" ref="33042033"  name="Puntigam Bahnhof" traveltime="4"/>
+    <member type="node" ref="33042040"  name="Don Bosco" traveltime="3"/>
+    <member type="node" ref="25528260"  name="Hauptbahnhof" traveltime="3"/>
+  </relation>
+
+  <!-- S6 -->
+  <relation id="1319746" version="37" timestamp="2013-08-31T15:16:05Z" changeset="17605025" uid="115612" user="tyr_asd">
+    <tag k="name" v="S6"/>
+    <tag k="operator" v="GKB"/>
+    <tag k="ref" v="S6"/>
+    <tag k="route" v="train"/>
+    <tag k="type" v="route"/>
+    <schedule>58</schedule>
+    <member type="way" ref="25528260"  name="Hauptbahnhof" traveltime="1"/>
+    <member type="way" ref="256755541"  name="Graz Wetzelsdorf" traveltime="3"/>
+    <member type="way" ref="256755544"  name="Graz Webling" traveltime="3"/>
+    <member type="way" ref="256755554"  name="Straßgang" traveltime="2"/>
+  </relation>
+  <relation id="13197461" version="37" timestamp="2013-08-31T15:16:05Z" changeset="17605025" uid="115612" user="tyr_asd">
+    <tag k="name" v="S6"/>
+    <tag k="operator" v="GKB"/>
+    <tag k="ref" v="S6"/>
+    <tag k="route" v="train"/>
+    <tag k="type" v="route"/>
+    <schedule>04 17 34 59</schedule>
+    <member type="way" ref="256755554"  name="Straßgang" traveltime="1"/>
+    <member type="way" ref="256755544"  name="Graz Webling" traveltime="2"/>
+    <member type="way" ref="256755541"  name="Graz Wetzelsdorf" traveltime="3"/>
+    <member type="way" ref="45081996"  name="Köflacherbahnhof" traveltime="3"/>
+    <member type="way" ref="25528260"  name="Hauptbahnhof" traveltime="2"/>
+  </relation>
+
+</osm>

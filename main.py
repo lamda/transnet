@@ -246,7 +246,7 @@ class Network(object):
         d = {}
         for k, v in dists.items():
             stop = k.name[:k.name.rfind('(')].strip()
-            # are names unambiguous?
+            # TODO are names unambiguous?
             if not stop in d or d[stop] > v:
                 d[stop] = v
         return sum(d.values())
@@ -333,19 +333,22 @@ if __name__ == '__main__':
 
     # preprocess('data/osm_tram.xml')
     # preprocess('data/osm_bus.xml')
+    # preprocess('data/osm_sbahn.xml')
 
     # Graz_tram = Network(['data/osm_tram_traveltimes.xml'])
     # print len(Graz_tram.graph), len(Graz_tram.graph.edges())
     # Graz_tram.centralities()
 
-    print '########################################################'
-
-    Graz = Network(['data/osm_tram_traveltimes.xml',
-                    'data/osm_bus_traveltimes.xml'])
-    print len(Graz.graph), len(Graz.graph.edges())
-    Graz.centralities()
+    # print '########################################################'
+    #
+    # Graz = Network(['data/osm_tram_traveltimes.xml',
+    #                 'data/osm_bus_traveltimes.xml'])
+    # print len(Graz.graph), len(Graz.graph.edges())
+    # Graz.centralities()
 
     # print '########################################################'
-    # Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
-    # print len(Graz_complete.graph), len(Graz_complete.graph.edges())
-    # Graz_complete.centralities()
+    Graz_complete = Network(['data/osm_tram_traveltimes.xml',
+                             'data/osm_bus_traveltimes.xml',
+                             'data/osm_sbahn_traveltimes.xml'])
+    print len(Graz_complete.graph), len(Graz_complete.graph.edges())
+    Graz_complete.centralities()
