@@ -80,9 +80,9 @@ class Network(object):
             if not title:
                 continue
             title = title[0]
-            if title in ['65E', '64E', '33E', '41/53', '58E', '82', '74E']:
-                # ignore a few redundant lines
-                continue
+            # if title in ['65E', '64E', '33E', '41/53', '58E', '82', '74E']:
+            #     # ignore a few redundant lines
+            #     continue
             skip = False
             # use only urban bus lines running during daytime
             # e.g., 30, 34E, 76U, 41/58 are okay
@@ -98,10 +98,7 @@ class Network(object):
                 continue
 
             # get the stops for each route and build the graph
-            if '<tag k="route" v="tram"/>' in rel:
-                keyword = 'traveltime'
-            else:
-                keyword = 'role="platform"'
+            keyword = 'traveltime'
 
             n_from = None
             for line in rel.split('\n'):
@@ -249,13 +246,20 @@ class Network(object):
         d = {}
         for k, v in dists.items():
             stop = k.name[:k.name.rfind('(')].strip()
+            # are names unambiguous?
             if not stop in d or d[stop] > v:
                 d[stop] = v
         return sum(d.values())
 
+
 def preprocess(f):
-    print 'Caution!\n'
-    return
+    # print 'Caution!\n'
+    # return
+
+    if 'tram' in f:
+        role = 'stop'
+    else:
+        role='platform'
 
     with io.open(f, encoding='utf-8') as infile:
         data = infile.read()
@@ -282,18 +286,33 @@ def preprocess(f):
     relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
     resolved_relations = {}
     for rel in relations:
-        title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)[0]
+        title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)
         if not title:
             continue
+        title = title[0]
+        # use only urban bus lines running during daytime
+        # e.g., 30, 34E, 76U, 41/58 are okay
+        # e.g., 230, 250, N5 are not
+        skip = False
+        if len(title) > 2:
+            if not 'E' in title and not 'U' in title:
+                skip = True
+        if 'N' in title:
+            skip = True
+        if len(title.split('/')) == 2 and len(title.split('/')[1]) == 2:
+            skip = False
+        if skip:
+            continue
+
         lines = rel.splitlines()
         text = [lines[0]]
         tags = [l for l in lines if '<tag' in l]
         for t in tags:
             text.append(t)
-        stops = [l for l in lines if 'role="stop"' in l]  # TODO: this works only for trams
+        stops = [l for l in lines if 'role="' + role + '"' in l]
         for s in stops:
             sid = re.findall(r'ref="([0-9]+)"', s)[0]
-            start =  s.replace('role="stop"/>', '')
+            start = s.replace('role="' + role + '"/>', '')
             text.append(start + ' name="' + id2name[sid] + '" traveltime="1"/>')
         if title not in resolved_relations:
             resolved_relations[title] = '  <!-- ' + title + ' -->\n'
@@ -313,17 +332,19 @@ def preprocess(f):
 if __name__ == '__main__':
 
     # preprocess('data/osm_tram.xml')
+    # preprocess('data/osm_bus.xml')
 
-    Graz_tram = Network(['data/osm_tram_traveltimes.xml'])
-    print len(Graz_tram.graph), len(Graz_tram.graph.edges())
-    Graz_tram.centralities()
+    # Graz_tram = Network(['data/osm_tram_traveltimes.xml'])
+    # print len(Graz_tram.graph), len(Graz_tram.graph.edges())
+    # Graz_tram.centralities()
 
-    # print '########################################################'
-    #
-    # Graz = Network(['data/osm_tram_bus.xml'])
-    # print len(Graz.graph), len(Graz.graph.edges())
-    # Graz.centralities()
-    #
+    print '########################################################'
+
+    Graz = Network(['data/osm_tram_traveltimes.xml',
+                    'data/osm_bus_traveltimes.xml'])
+    print len(Graz.graph), len(Graz.graph.edges())
+    Graz.centralities()
+
     # print '########################################################'
     # Graz_complete = Network(['data/osm_tram_bus.xml', 'data/osm_sbahn.xml'])
     # print len(Graz_complete.graph), len(Graz_complete.graph.edges())
