@@ -24596,17 +24596,6 @@
     <member type="node" ref="774560551"  name="Prinzhoferweg" traveltime="1"/>
     <member type="node" ref="288379420"  name="Raaba/Kreisverkehr" traveltime="2"/>
     <member type="node" ref="773928786"  name="Sparischmied" traveltime="1"/>
-    <member type="node" ref="773928732"  name="Bahnhof" traveltime="0"/>
-    <member type="node" ref="773928753"  name="Reinhard-Machold-Straße" traveltime="1"/>
-    <member type="node" ref="773928670"  name="Lindenstraße" traveltime="0"/>
-    <member type="node" ref="773928657"  name="Lindenwirt" traveltime="1"/>
-    <member type="node" ref="773928766"  name="Holzerhofstraße" traveltime="0"/>
-    <member type="node" ref="619516562"  name="Schule" traveltime="1"/>
-    <member type="node" ref="675853090"  name="Gemeinde" traveltime="0"/>
-    <member type="node" ref="1069189710"  name="Badstraße" traveltime="1"/>
-    <member type="node" ref="1069189988"  name="Wöblinger Straße" traveltime="1"/>
-    <member type="node" ref="1069189728"  name="Café Gleichweit" traveltime="1"/>
-    <member type="node" ref="653151738"  name="P+R" traveltime="1"/>
   </relation>
   <relation id="965067" version="22" timestamp="2013-01-10T23:44:37Z" changeset="14605013" uid="321042" user="species">
     <tag k="alternate" v="no"/>
@@ -24617,17 +24606,6 @@
     <tag k="to" v="Liebenau/Murpark"/>
     <tag k="type" v="route"/>
     <schedule>00 20 40</schedule>
-    <member type="node" ref="653151738"  name="P+R" traveltime="1"/>
-    <member type="node" ref="652449993"  name="Café Gleichweit" traveltime="1"/>
-    <member type="node" ref="1069189756"  name="Wöblinger Straße" traveltime="0"/>
-    <member type="node" ref="652449990"  name="Badstraße" traveltime="1"/>
-    <member type="node" ref="652449979"  name="Gemeinde" traveltime="0"/>
-    <member type="node" ref="619516563"  name="Schule" traveltime="1"/>
-    <member type="node" ref="619519155"  name="Holzerhofstraße" traveltime="1"/>
-    <member type="node" ref="773928717"  name="Lindenwirt" traveltime="0"/>
-    <member type="node" ref="652453421"  name="Lindenstraße" traveltime="1"/>
-    <member type="node" ref="652453415"  name="Reinhard-Machold-Straße" traveltime="0"/>
-    <member type="node" ref="652453413"  name="Bahnhof" traveltime="1"/>
     <member type="node" ref="652453409"  name="Sparischmied" traveltime="1"/>
     <member type="node" ref="773928734"  name="Raaba/Kreisverkehr" traveltime="1"/>
     <member type="node" ref="652453406"  name="Prinzhoferweg" traveltime="1"/>
@@ -24664,9 +24642,6 @@
     <member type="node" ref="774492923"  name="Bahnhof" traveltime="1"/>
     <member type="node" ref="774547978"  name="Gemeindeamt" traveltime="1"/>
     <member type="node" ref="1110427330"  name="Gärtnerei Leitner" traveltime="1"/>
-    <member type="node" ref="601643563"  name="Spielerhof" traveltime="1"/>
-    <member type="node" ref="774547962"  name="Teslastraße" traveltime="1"/>
-    <member type="node" ref="774548001"  name="Gewerbepark" traveltime="1"/>
   </relation>
   <relation id="539252" version="37" timestamp="2013-09-22T16:00:01Z" changeset="17976147" uid="56870" user="StefanTiran">
     <tag k="alternate" v="no"/>
@@ -24678,9 +24653,6 @@
     <tag k="to" v="Schulzentrum St. Peter"/>
     <tag k="type" v="route"/>
     <schedule>22</schedule>
-    <member type="node" ref="774548001"  name="Gewerbepark" traveltime="1"/>
-    <member type="node" ref="774547992"  name="Teslastraße" traveltime="7"/>
-    <member type="node" ref="601643562"  name="Spielerhof" traveltime="2"/>
     <member type="node" ref="1110427154"  name="Gärtnerei Leitner" traveltime="1"/>
     <member type="node" ref="601643561"  name="Gemeindeamt" traveltime="1"/>
     <member type="node" ref="288379415"  name="Bahnhof" traveltime="1"/>
