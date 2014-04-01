@@ -15,6 +15,7 @@ import copy
 from math import radians, cos, sin, asin, sqrt
 import operator
 import io
+import random
 import datetime
 import pdb
 
@@ -23,8 +24,8 @@ import networkx as nx
 
 def debug_iter(items, n=100):
     for index, item in enumerate(items):
-        if index % n == 0:
-            print datetime.datetime.now(), index+1, '/', len(items)
+        # if index % n == 0:
+            # print datetime.datetime.now(), index+1, '/', len(items)
         yield item
 
 
@@ -73,16 +74,13 @@ class Network(object):
 
         # extract the relations
         relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
-        self.graph = nx.DiGraph()
+        self.graph = nx.MultiDiGraph()
         rel2interval = defaultdict(unicode)
         for rel in relations:
             title = re.findall(r'<tag k="ref" v="([^"]+)"', rel)
             if not title:
                 continue
             title = title[0]
-            # if title in ['65E', '64E', '33E', '41/53', '58E', '82', '74E']:
-            #     # ignore a few redundant lines
-            #     continue
             skip = False
             # use only urban bus lines running during daytime
             # e.g., 30, 34E, 76U, 41/58 are okay
@@ -98,28 +96,27 @@ class Network(object):
                 continue
 
             # get the stops for each route and build the graph
-            keyword = 'traveltime'
-
             n_from = None
             for line in rel.split('\n'):
-                if keyword in line:
+                if 'traveltime' in line:
                     sid = re.findall(r'ref="([0-9]+)', line)[0]
-                    if sid in ['458195176']:  # OSM inconsistency
+                    if sid in ['458195176']:  # fix for an OSM inconsistency
                         continue
                     n_to = copy.deepcopy(name2node[id2name[sid]])
                     n_to.name += ' (' + title + ')'
                     if n_from:
                         traveltime = re.findall(r'traveltime="([0-9]+)"', line)
                         traveltime = int(traveltime[0])
-                        suffix = ' (' + title + ')'
                         self.graph.add_edge(n_from, n_to, weight=traveltime)
                     n_from = n_to
 
             schedule = re.findall(r'<schedule>(.*?)</schedule>', rel)[0]
             rel2interval[title] += schedule + ' '
 
+        # add stop "master" nodes for walking and transits
         # add transfer edges to the graph
-        # e.g., Jakominiplatz (1) --> Jakominiplatz (3)
+        # e.g., Jakominiplatz (1) --> Jakominiplatz
+        #       Jakominiplatz     --> Jakominiplatz (1)
         # edge weight: expected transfer time
         for r, s in rel2interval.items():
             # expected transfer time is half the interval
@@ -132,12 +129,94 @@ class Network(object):
             n.interval = rel2interval[line]
             node2lnode[name].append(n)
 
+        master_nodes = []
         for k, v in node2lnode.items():
+            master = copy.deepcopy(random.sample(v, 1)[0])
+            master.name = master.name[:master.name.rfind('(')][:-1] + ' '
+            master_nodes.append(master)
             for n in v:
-                for m in v:
-                    if n == m:
-                        continue
-                    self.graph.add_edge(n, m, weight=m.interval)
+                self.graph.add_edge(master, n, weight=n.interval)
+                self.graph.add_edge(n, master, weight=0.0)
+
+        # add walking edges for nodes within a 500m distance
+        speed = 4000 / 60  # meters per minute
+        for n in master_nodes:
+            for m in master_nodes:
+                dist = self.geo_dist(n, m)
+                if n == m:
+                    continue
+                if dist <= 500:  # TODO increase this?
+                    # self.graph.add_edge(n, m, weight=dist/speed)
+                    # print n.name, m.name, dist, dist / speed
+                    pass
+
+        # add virtual lines to model parallel lines
+        # e.g., line "3 6" running from Jakominiplatz to Dietrichsteinplatz
+        #       with the average waiting time expected when taking either 3 or 6
+
+        # get combinations of lines actually occurring together
+        common_lines = set()
+
+        def get_connecting_lines(n, m):
+            outgoing = [set(self.graph.successors(b)) for b in self.graph[n]]
+            outgoing = reduce(lambda a, b: a | b, outgoing) - set([n])
+            incoming = set(self.graph.predecessors(m))
+
+            common = outgoing & incoming
+            lines = set()
+            if len(common) > 1:
+                for nb in common:
+                    if '(' in nb.name:
+                        lines.add(nb.name[nb.name.rfind('('):].strip('( )'))
+            return lines
+
+        for n in master_nodes:
+            for m in master_nodes:
+                if n == m:
+                    continue
+                lines = get_connecting_lines(n, m)
+                if lines:
+                    common_lines.add(frozenset(lines))
+
+        common_intervals = {}
+        for cl in common_lines:
+            frequency = 0
+            for l in cl:
+                frequency += 60 / rel2interval[l]
+            common_intervals[cl] = 60 / frequency
+
+        # connect nodes if they share any set of nodes contained in common_lines
+        def connect_virtually(n, m, c):
+            # create or reference adjacent nodes
+            c_name = '(' + ' '.join(c) + ')'
+            try:
+                nb = [i for i in self.graph[n]
+                      if c_name in i.name and not self.graph.successors(i)][0]
+            except IndexError:
+                nb = copy.deepcopy(n)
+                nb.name = n.name + ' ' + c_name
+
+            try:
+                mb = [i for i in self.graph[m]
+                      if c_name in i.name and not self.graph.predecessors(i)][0]
+            except IndexError:
+                mb = copy.deepcopy(m)
+                mb.name = m.name + ' ' + c_name
+
+            # connect nodes
+            self.graph.add_edge(n, nb, weight=common_intervals[c])
+            self.graph.add_edge(nb, n, weight=0.0)
+            self.graph.add_edge(m, mb, weight=common_intervals[c])
+            self.graph.add_edge(mb, n, weight=0.0)
+            tt = nx.dijkstra_path_length(self.graph, n, m)
+            self.graph.add_edge(nb, mb, tt)
+
+        for n in master_nodes:
+            for m in master_nodes:
+                cl = frozenset(get_connecting_lines(n, m))
+                for c in common_intervals:
+                    if c <= cl:
+                        connect_virtually(n, m, c)
 
     def centralities(self):
         """
@@ -146,7 +225,7 @@ class Network(object):
         for c in [
             #nx.betweenness_centrality,
             #nx.eigenvector_centrality_numpy,
-            self.beeline,
+            # self.beeline,
             #self.beeline_intermediate,
             self.travel_time
         ]:
@@ -169,6 +248,9 @@ class Network(object):
                 stop = n[0].name[:n[0].name.rfind('(')].strip()
                 if d[stop] < n[1]:
                     d[stop] = n[1]
+
+            for k, v in d.items():
+                d[k] = v / len(d)
 
             for k, v in sorted(d.iteritems(), key=operator.itemgetter(1),
                                reverse=rev)[:topn]:
@@ -241,14 +323,12 @@ class Network(object):
             nc[n] = self.sum_filter_stops(distances)
         for n in nc:
             nc[n] += n.interval
-            nc[n] /= len(graph)
         return nc
 
     def sum_filter_stops(self, dists):
         d = {}
         for k, v in dists.items():
             stop = k.name[:k.name.rfind('(')].strip()
-            # TODO are names unambiguous?
             if not stop in d or d[stop] > v:
                 d[stop] = v
         return sum(d.values())
@@ -336,8 +416,8 @@ if __name__ == '__main__':
 
     Graz = Network([
         'data/osm_tram_traveltimes.xml',
-        'data/osm_bus_traveltimes.xml',
-        'data/osm_sbahn_traveltimes.xml'
+        # 'data/osm_bus_traveltimes.xml',
+        # 'data/osm_sbahn_traveltimes.xml'
     ])
     print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges\n'
     Graz.centralities()
