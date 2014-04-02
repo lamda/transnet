@@ -2,7 +2,7 @@
 
 
 """
-Transnet
+TransNet
 2014 Daniel Lamprecht
 daniel.lamprecht@gmx.at
 """
@@ -26,6 +26,7 @@ import networkx as nx
 
 
 def debug_iter(items, n=100):
+    """iterate over an iterable and produce debug output"""
     for index, item in enumerate(items):
         if index % n == 0:
             print datetime.datetime.now(), index+1, '/', len(items)
@@ -42,12 +43,18 @@ class Node(object):
 
         
 class Network(object):
-    def __init__(self, filenames):
+    def __init__(self, filenames, lines=False):
         """
-        reads in the OSM data and constructs the network (saved in self.graph)
+        read in the OSM data and construct the network
+        lines=False: construct a directed unweighted network of the lines
+        lines=True: construct a directed weighted network with lines
+                    as well as transfer and travel times
         """
         if not filenames:
+            print 'No files specified'
             return
+        print 'building network...'
+
         # read data from files
         data = ''
         for f in filenames:
@@ -76,7 +83,6 @@ class Network(object):
                 id2name[new] = id2name[old]
 
         # extract the relations
-        print 'adding lines'
         relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
         self.graph = nx.MultiDiGraph()
         rel2interval = defaultdict(unicode)
@@ -106,23 +112,31 @@ class Network(object):
                     sid = re.findall(r'ref="([0-9]+)', line)[0]
                     if sid in ['458195176']:  # fix for an OSM inconsistency
                         continue
-                    n_to = copy.deepcopy(name2node[id2name[sid]])
-                    n_to.name += ' (' + title + ')'
-                    if n_from:
-                        traveltime = re.findall(r'traveltime="([0-9]+)"', line)
-                        traveltime = int(traveltime[0])
-                        self.graph.add_edge(n_from, n_to, weight=traveltime)
-                    n_from = n_to
+                    if lines:
+                        n_to = copy.deepcopy(name2node[id2name[sid]])
+                        n_to.name += ' (' + title + ')'
+                        if n_from:
+                            traveltime = re.findall(r'traveltime="([0-9]+)"', line)
+                            traveltime = int(traveltime[0])
+                            self.graph.add_edge(n_from, n_to, weight=traveltime)
+                        n_from = n_to
+                    else:
+                        n_to = name2node[id2name[sid]]
+                        if n_from:
+                            self.graph.add_edge(n_from, n_to)
+                        n_from = n_to
 
             schedule = re.findall(r'<schedule>(.*?)</schedule>', rel)[0]
             rel2interval[title] += schedule + ' '
+
+        if not lines:
+            return
 
         # add stop "master" nodes for walking and transits
         # add transfer edges to the graph
         # e.g., Jakominiplatz (1) --> Jakominiplatz
         #       Jakominiplatz     --> Jakominiplatz (1)
         # edge weight: expected transfer time
-        print 'adding master nodes'
         for r, s in rel2interval.items():
             # expected transfer time is half the interval
             rel2interval[r] = 60 / (len(s.split()) / 2) / 2
@@ -134,12 +148,12 @@ class Network(object):
             n.interval = rel2interval[line]
             node2lnode[name].append(n)
 
-        master_nodes = []
+        self.master_nodes = []
         name2master = {}
         for k, v in node2lnode.items():
             master = copy.deepcopy(random.sample(v, 1)[0])
             master.name = master.name[:master.name.rfind('(')][:-1] + ' '
-            master_nodes.append(master)
+            self.master_nodes.append(master)
             name2master[master.name] = master
             for n in v:
                 self.graph.add_edge(master, n, weight=n.interval)
@@ -150,7 +164,6 @@ class Network(object):
         #       with the average waiting time expected when taking either 3 or 6
 
         # get combinations of lines actually occurring together
-        print 'adding virtual lines'
         common_lines = set()
 
         def get_connecting_lines(n, m):
@@ -166,8 +179,8 @@ class Network(object):
                         lines.add(nb.name[nb.name.rfind('('):].strip('( )'))
             return lines
 
-        for n in master_nodes:
-            for m in master_nodes:
+        for n in self.master_nodes:
+            for m in self.master_nodes:
                 if n == m:
                     continue
                 lines = get_connecting_lines(n, m)
@@ -209,18 +222,17 @@ class Network(object):
             tt = nx.dijkstra_path_length(self.graph, n, m)
             self.graph.add_edge(nb, mb, weight=tt)
 
-        for n in master_nodes:
-            for m in master_nodes:
+        for n in self.master_nodes:
+            for m in self.master_nodes:
                 cl = frozenset(get_connecting_lines(n, m))
                 for c in common_lines:
                     if c <= cl:
                         connect_virtually(n, m, c)
 
         # add walking edges for nodes within a 500m distance
-        print 'adding walking edges'
         speed = 4000 / 60  # meters per minute
-        for n in master_nodes:
-            for m in master_nodes:
+        for n in self.master_nodes:
+            for m in self.master_nodes:
                 dist = self.geo_dist(n, m)
                 if n == m:
                     continue
@@ -228,82 +240,56 @@ class Network(object):
                     self.graph.add_edge(n, m, weight=dist/speed)
                     # print n.name, m.name, dist, dist / speed
 
-    def centralities(self):
-        """
-        calculates several centrality measures on the network
-        """
-        print 'computing centralities'
-        for c in [
-            #nx.betweenness_centrality,
-            #nx.eigenvector_centrality_numpy,
-            # self.beeline,
-            #self.beeline_intermediate,
-            self.travel_time
-        ]:
-            nodes = c(self.graph)
-            print c.__name__
-            rev = True
-            topn = 20
-            if c in [self.beeline, self.beeline_intermediate, self.travel_time]:
-                rev = False
-            # for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-            #                 reverse=rev)[:topn]:
-            #     print '%.3f' % n[1], n[0].name
-            # print '-----------------------------------------'
+    def print_centralities(self, nc, top=20):
+        """print the nodes with the highest centrality values"""
+        for n in sorted(nc.iteritems(), key=operator.itemgetter(1))[:top]:
+            print '%.3f' % n[1], n[0].name
+        print '-----------------------------------------'
 
-            #  for several stops sharing a name, take only the maximum
-            #  restructure the dictionary accordingly
-            d = defaultdict(float)
-            for n in sorted(nodes.iteritems(), key=operator.itemgetter(1),
-                            reverse=rev):
-                stop = n[0].name[:n[0].name.rfind('(')].strip()
-                if d[stop] < n[1]:
-                    d[stop] = n[1]
-
-            for k, v in d.items():
-                d[k] = v / len(d)
-
-            for k, v in sorted(d.iteritems(), key=operator.itemgetter(1),
-                               reverse=rev)[:topn]:
-                print '%.3f' % v, k
-            print '-----------------------------------------\n'
-
-    def beeline(self, graph):
+    def closeness_centrality(self):
+        """calculate the closeness centrality
+        i.e., the average path length to every other network node
         """
-        calculates the average beeline between all pairs of stops in the network
+        print '\n++++++++ closeness centrality ++++++++'
+        nc = {}
+        for n in self.graph:
+            distances = nx.single_source_dijkstra_path_length(self.graph, n)
+            nc[n] = sum(distances.values()) / len(self.graph)
+        self.print_centralities(nc)
+
+    def geo_closeness_centrality(self):
+        """calculate the geographic closeness centrality
+        i.e., the average path length to every other node, but with egdes
+              weighted by geographic distances (bee lines)
         """
+        print '\n++++++++ geographical closeness centrality ++++++++'
+
+        graph = nx.DiGraph()
+        for e, f in self.graph.edges():
+            graph.add_edge(e, f, weight=self.geo_dist(e, f))
         nc = {}
         for n in graph:
-            nc[n] = 0
-            for m in graph:
-                nc[n] += self.geo_dist(n, m)
-        
-        for n in nc:
-            nc[n] /= len(graph)
-        
-        return nc
+            distances = nx.single_source_dijkstra_path_length(graph, n)
+            nc[n] = nc[n] = sum(distances.values()) / len(self.graph)
+        self.print_centralities(nc)
 
-    def beeline_intermediate(self, graph):
+    def traveltime_centrality(self):
+        """calculate the traveltime centrality
+        i.e., the closeness centrality on the travel and transit time network
+        calculate only between master nodes (and ignore auxiliary nodes)
         """
-        similar to self.beeline(), calculates the average beeline between all
-        pairs of stops in the network but instead of calculating the beeline
-        between nodes A and B directly, it calculates the beeline between all
-        intermediate stops, e.g., A-C-D-E-B
-        """
+        print '\n++++++++ traveltime centrality ++++++++'
         nc = {}
-        for n in debug_iter(graph, 1):
-            nc[n] = 0
-            for m in graph:
-                nc[n] += self.geo_dist_sp(n, m)
-        
-        for n in nc:
-            nc[n] /= len(graph)
-        
-        return nc
-        
+        for n in debug_iter(self.master_nodes, 10):
+            distances = nx.single_source_dijkstra_path_length(self.graph, n)
+            distances = {k: v for k, v in distances.items()
+                         if k in self.master_nodes}
+            nc[n] = sum(distances.values()) / len(self.master_nodes)
+        self.print_centralities(nc)
+
     def geo_dist(self, n, m):
         """
-        calculates the (geodesic) distance between two GPS coordinates
+        calculate the (geodesic) distance between two given GPS coordinates
         """
         # convert decimal degrees to radians 
         lon1, lat1, lon2, lat2 = map(radians, [n.lon, n.lat, m.lon, m.lat])
@@ -314,42 +300,16 @@ class Network(object):
         c = 2 * asin(sqrt(a)) 
         km = 6367 * c
         return km * 1000
-        
-    def geo_dist_sp(self, n, m):
-        """
-        like self.geo_dist, calculates the (geodesic) distance between two GPS
-        coordinates but by using all intermediate stops, e.g., not the distance
-        A-B but e.g., A-C-D-E-B
-        """
-        sp = nx.shortest_path(self.graph, n, m)
-        dist = 0
-        for a, b in zip(sp, sp[1:]):
-            dist += self.geo_dist(a, b)
-        return dist            
-
-    def travel_time(self, graph):
-        nc = {}
-        for n in debug_iter(graph, 1):
-            distances = nx.single_source_dijkstra_path_length(self.graph, n)
-            nc[n] = self.sum_filter_stops(distances)
-        for n in nc:
-            nc[n] += n.interval
-        return nc
-
-    def sum_filter_stops(self, dists):
-        d = {}
-        for k, v in dists.items():
-            stop = k.name[:k.name.rfind('(')].strip()
-            if not stop in d or d[stop] > v:
-                d[stop] = v
-        return sum(d.values())
 
 
 def preprocess(f):
+    """
+    preprocess raw OSM data and adapt it to the format used in this program
+    """
     if 'tram' in f:
         role = 'stop'
     else:
-        role='platform'
+        role = 'platform'
 
     with io.open(f, encoding='utf-8') as infile:
         data = infile.read()
@@ -406,7 +366,8 @@ def preprocess(f):
             text.append(start + ' name="' + id2name[sid] + '" traveltime="1"/>')
         if title not in resolved_relations:
             resolved_relations[title] = '  <!-- ' + title + ' -->\n'
-        resolved_relations[title] += '  ' + '\n'.join(text) + '\n  </relation>\n'
+        resolved_relations[title] += '  ' + '\n'.join(text) +\
+                                     '\n  </relation>\n'
 
     f_resolved = f.split('.')[0] + '_resolved.xml'
     with io.open(f_resolved, 'w', encoding='utf-8') as outfile:
@@ -421,14 +382,24 @@ def preprocess(f):
 
 if __name__ == '__main__':
 
-    # preprocess('data/osm_tram.xml')
-    # preprocess('data/osm_bus.xml')
-    # preprocess('data/osm_sbahn.xml')
+    # preprocess('data/osm_tram_raw.xml')
+    # preprocess('data/osm_bus_raw.xml')
+    # preprocess('data/osm_sbahn_raw.xml')
 
     Graz = Network([
         'data/osm_tram_traveltimes.xml',
         'data/osm_bus_traveltimes.xml',
         'data/osm_sbahn_traveltimes.xml'
-    ])
-    print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges\n'
-    Graz.centralities()
+    ], lines=False)
+    print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges'
+    Graz.closeness_centrality()
+    Graz.geo_closeness_centrality()
+
+    Graz = Network([
+        'data/osm_tram_traveltimes.xml',
+        'data/osm_bus_traveltimes.xml',
+        'data/osm_sbahn_traveltimes.xml'
+    ], lines=True)
+    print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges'
+    Graz.traveltime_centrality()
+
