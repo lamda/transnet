@@ -19,13 +19,16 @@ import random
 import datetime
 import pdb
 
+import matplotlib
+matplotlib.use('GTKAgg')
+import matplotlib.pyplot as plt
 import networkx as nx
 
 
 def debug_iter(items, n=100):
     for index, item in enumerate(items):
-        # if index % n == 0:
-            # print datetime.datetime.now(), index+1, '/', len(items)
+        if index % n == 0:
+            print datetime.datetime.now(), index+1, '/', len(items)
         yield item
 
 
@@ -73,6 +76,7 @@ class Network(object):
                 id2name[new] = id2name[old]
 
         # extract the relations
+        print 'adding lines'
         relations = re.findall(r'<relation .*? </relation>', data, re.DOTALL)
         self.graph = nx.MultiDiGraph()
         rel2interval = defaultdict(unicode)
@@ -118,6 +122,7 @@ class Network(object):
         # e.g., Jakominiplatz (1) --> Jakominiplatz
         #       Jakominiplatz     --> Jakominiplatz (1)
         # edge weight: expected transfer time
+        print 'adding master nodes'
         for r, s in rel2interval.items():
             # expected transfer time is half the interval
             rel2interval[r] = 60 / (len(s.split()) / 2) / 2
@@ -130,31 +135,22 @@ class Network(object):
             node2lnode[name].append(n)
 
         master_nodes = []
+        name2master = {}
         for k, v in node2lnode.items():
             master = copy.deepcopy(random.sample(v, 1)[0])
             master.name = master.name[:master.name.rfind('(')][:-1] + ' '
             master_nodes.append(master)
+            name2master[master.name] = master
             for n in v:
                 self.graph.add_edge(master, n, weight=n.interval)
                 self.graph.add_edge(n, master, weight=0.0)
-
-        # add walking edges for nodes within a 500m distance
-        speed = 4000 / 60  # meters per minute
-        for n in master_nodes:
-            for m in master_nodes:
-                dist = self.geo_dist(n, m)
-                if n == m:
-                    continue
-                if dist <= 500:  # TODO increase this?
-                    # self.graph.add_edge(n, m, weight=dist/speed)
-                    # print n.name, m.name, dist, dist / speed
-                    pass
 
         # add virtual lines to model parallel lines
         # e.g., line "3 6" running from Jakominiplatz to Dietrichsteinplatz
         #       with the average waiting time expected when taking either 3 or 6
 
         # get combinations of lines actually occurring together
+        print 'adding virtual lines'
         common_lines = set()
 
         def get_connecting_lines(n, m):
@@ -206,22 +202,37 @@ class Network(object):
             # connect nodes
             self.graph.add_edge(n, nb, weight=common_intervals[c])
             self.graph.add_edge(nb, n, weight=0.0)
+
             self.graph.add_edge(m, mb, weight=common_intervals[c])
-            self.graph.add_edge(mb, n, weight=0.0)
+            self.graph.add_edge(mb, m, weight=0.0)
+
             tt = nx.dijkstra_path_length(self.graph, n, m)
-            self.graph.add_edge(nb, mb, tt)
+            self.graph.add_edge(nb, mb, weight=tt)
 
         for n in master_nodes:
             for m in master_nodes:
                 cl = frozenset(get_connecting_lines(n, m))
-                for c in common_intervals:
+                for c in common_lines:
                     if c <= cl:
                         connect_virtually(n, m, c)
+
+        # add walking edges for nodes within a 500m distance
+        print 'adding walking edges'
+        speed = 4000 / 60  # meters per minute
+        for n in master_nodes:
+            for m in master_nodes:
+                dist = self.geo_dist(n, m)
+                if n == m:
+                    continue
+                if dist <= 500:
+                    self.graph.add_edge(n, m, weight=dist/speed)
+                    # print n.name, m.name, dist, dist / speed
 
     def centralities(self):
         """
         calculates several centrality measures on the network
         """
+        print 'computing centralities'
         for c in [
             #nx.betweenness_centrality,
             #nx.eigenvector_centrality_numpy,
@@ -416,8 +427,8 @@ if __name__ == '__main__':
 
     Graz = Network([
         'data/osm_tram_traveltimes.xml',
-        # 'data/osm_bus_traveltimes.xml',
-        # 'data/osm_sbahn_traveltimes.xml'
+        'data/osm_bus_traveltimes.xml',
+        'data/osm_sbahn_traveltimes.xml'
     ])
     print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges\n'
     Graz.centralities()
