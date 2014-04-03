@@ -112,15 +112,16 @@ class Network(object):
                     sid = re.findall(r'ref="([0-9]+)', line)[0]
                     if sid in ['458195176']:  # fix for an OSM inconsistency
                         continue
-                    if lines:
+                    if lines:  # add line-specific nodes (e.g., Don Bosco (33))
                         n_to = copy.deepcopy(name2node[id2name[sid]])
                         n_to.name += ' (' + title + ')'
                         if n_from:
-                            traveltime = re.findall(r'traveltime="([0-9]+)"', line)
+                            traveltime = re.findall(r'traveltime="([0-9]+)"',
+                                                    line)
                             traveltime = int(traveltime[0])
                             self.graph.add_edge(n_from, n_to, weight=traveltime)
                         n_from = n_to
-                    else:
+                    else:  # add general nodes (e.g., Don Bosco)
                         n_to = name2node[id2name[sid]]
                         if n_from:
                             self.graph.add_edge(n_from, n_to)
@@ -129,7 +130,7 @@ class Network(object):
             schedule = re.findall(r'<schedule>(.*?)</schedule>', rel)[0]
             rel2interval[title] += schedule + ' '
 
-        if not lines:
+        if not lines:  # simple network is complete here
             return
 
         # add stop "master" nodes for walking and transits
@@ -234,11 +235,8 @@ class Network(object):
         for n in self.master_nodes:
             for m in self.master_nodes:
                 dist = self.geo_dist(n, m)
-                if n == m:
-                    continue
-                if dist <= 500:
+                if n != m and dist <= 500:
                     self.graph.add_edge(n, m, weight=dist/speed)
-                    # print n.name, m.name, dist, dist / speed
 
     def print_centralities(self, nc, top=20):
         """print the nodes with the highest centrality values"""
@@ -288,12 +286,10 @@ class Network(object):
         self.print_centralities(nc)
 
     def geo_dist(self, n, m):
-        """
-        calculate the (geodesic) distance between two given GPS coordinates
-        """
+        """calculate the geodesic distance between two given GPS coordinates"""
         # convert decimal degrees to radians 
         lon1, lat1, lon2, lat2 = map(radians, [n.lon, n.lat, m.lon, m.lat])
-        # haversine formula 
+        # use the haversine formula
         dlon = lon2 - lon1 
         dlat = lat2 - lat1 
         a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
@@ -304,7 +300,10 @@ class Network(object):
 
 def preprocess(f):
     """
-    preprocess raw OSM data and adapt it to the format used in this program
+    preprocess raw OSM data (from queries to the Overpass Turbo API) and adapt
+        it to the format used in this program
+    the data files in the data/ folder have already been preprocessed and
+        schedule data was manually added to them
     """
     if 'tram' in f:
         role = 'stop'
@@ -386,6 +385,8 @@ if __name__ == '__main__':
     # preprocess('data/osm_bus_raw.xml')
     # preprocess('data/osm_sbahn_raw.xml')
 
+    # calculate closeness and geographic closeness
+    # on the network consisting of stops and connections between them
     Graz = Network([
         'data/osm_tram_traveltimes.xml',
         'data/osm_bus_traveltimes.xml',
@@ -395,6 +396,8 @@ if __name__ == '__main__':
     Graz.closeness_centrality()
     Graz.geo_closeness_centrality()
 
+    # calculate travel times on the more complex network consisting of stops and
+    # weighted connections for walking, transits and combined ("virtual") lines
     Graz = Network([
         'data/osm_tram_traveltimes.xml',
         'data/osm_bus_traveltimes.xml',
