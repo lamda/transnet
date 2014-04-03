@@ -1051,7 +1051,7 @@
     <member type="node" ref="224426955"  name="Mariatrost" traveltime="1"/>
     <member type="node" ref="86096406"  name="Tannhof" traveltime="1"/>
     <member type="node" ref="224426899"  name="Teichhof" traveltime="1"/>
-    <member type="node" ref="772629261"  name="Waldhof" traveltime="1"/>
+    <member type="node" ref="86096405"  name="Waldhof" traveltime="1"/>
     <member type="node" ref="224426845"  name="Wagnesweg" traveltime="1"/>
     <member type="node" ref="27678736"  name="Rettenbach" traveltime="1"/>
     <member type="node" ref="1939536728"  name="St. Johann" traveltime="2"/>

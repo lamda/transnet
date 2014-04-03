@@ -4608,12 +4608,6 @@
     <tag k="name" v="Postamt"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="441242590" lat="47.1000194" lon="15.7082340" version="2" timestamp="2012-06-25T13:08:45Z" changeset="12011233" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Gleisdorf,Weiz,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="442064178" lat="47.1051310" lon="15.5129951" version="7" timestamp="2012-08-07T16:21:43Z" changeset="12647488" uid="9605" user="a_uller">
     <tag k="bench" v="yes"/>
     <tag k="bin" v="yes"/>
@@ -5034,13 +5028,6 @@
     <tag k="name" v="Sparischmied"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="652453413" lat="47.0417919" lon="15.5072396" version="3" timestamp="2010-12-28T14:04:48Z" changeset="6788555" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Hart bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="old_name" v="Bierbaumstraße"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="652453415" lat="47.0433423" lon="15.5082354" version="3" timestamp="2010-12-28T14:03:08Z" changeset="6788555" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Hart bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
@@ -5085,13 +5072,6 @@
     <tag k="name" v="Kapruner-Generator-Straße"/>
     <tag k="note" v="Bus Lines 200, 201, 202, 203, 204"/>
     <tag k="public_transport" v="platform"/>
-    <tag k="shelter" v="no"/>
-  </node>
-  <node id="669260404" lat="47.2124014" lon="15.6294922" version="2" timestamp="2011-02-25T17:24:02Z" changeset="7392361" uid="56870" user="StefanTiran">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="name" v="Gebietskrankenkasse"/>
-    <tag k="note" v="Bus Line 202"/>
-    <tag k="operator" v="Steiermärkische Landesbahnen"/>
     <tag k="shelter" v="no"/>
   </node>
   <node id="669263476" lat="47.1960004" lon="15.6490627" version="1" timestamp="2010-03-19T07:19:30Z" changeset="4167689" uid="35673" user="gzin">
@@ -5147,12 +5127,6 @@
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Lieboch,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Gasthaus Schirgi"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="679944252" lat="46.9725290" lon="15.3382560" version="2" timestamp="2013-08-12T12:53:34Z" changeset="17316916" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Lieboch,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Gemeindeamt"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="679944253" lat="46.9719469" lon="15.3617099" version="4" timestamp="2013-08-12T12:53:35Z" changeset="17316916" uid="9605" user="a_uller">
@@ -5653,12 +5627,6 @@
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Kalsdorf bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Süd"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="724371002" lat="46.9650490" lon="15.4701394" version="5" timestamp="2012-10-31T09:50:57Z" changeset="13697017" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Kalsdorf bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="727285317" lat="47.0939386" lon="15.4954030" version="4" timestamp="2012-08-07T16:21:40Z" changeset="12647488" uid="9605" user="a_uller">
@@ -6569,7 +6537,7 @@
   </node>
   <node id="753022001" lat="47.0667460" lon="15.4700323" version="3" timestamp="2010-12-21T16:00:28Z" changeset="6726492" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
-    <tag k="name" v="Kapelle"/>
+    <tag k="name" v="Graz/Kapelle"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="753032238" lat="47.0664302" lon="15.5182998" version="3" timestamp="2012-10-25T15:43:35Z" changeset="13628610" uid="9605" user="a_uller">
@@ -8093,13 +8061,6 @@
     <tag k="old_name" v="Gasthaus Pichlmaier"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="773928732" lat="47.0417732" lon="15.5073346" version="2" timestamp="2010-12-28T14:05:11Z" changeset="6788555" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Hart bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="old_name" v="Bierbaumstraße"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="773928734" lat="47.0352740" lon="15.4924350" version="2" timestamp="2010-12-28T14:03:25Z" changeset="6788555" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Graz,Graz,Steiermark,Österreich,Europe"/>
@@ -8171,7 +8132,7 @@
     <tag k="bin" v="yes"/>
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Raaba,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Gemeindeamt"/>
+    <tag k="name" v="Grambach/Gemeindeamt"/>
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="no"/>
   </node>
@@ -9045,7 +9006,7 @@
   <node id="960600202" lat="47.0669286" lon="15.4702011" version="3" timestamp="2013-02-07T08:21:18Z" changeset="14942207" uid="115612" user="tyr_asd">
     <tag k="bench" v="yes"/>
     <tag k="highway" v="bus_stop"/>
-    <tag k="name" v="Kapelle"/>
+    <tag k="name" v="Graz/Kapelle"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="960600204" lat="47.0705562" lon="15.4925705" version="2" timestamp="2010-12-21T16:00:22Z" changeset="6726492" uid="9605" user="a_uller">
@@ -9326,7 +9287,7 @@
   <node id="1020217840" lat="47.1434695" lon="15.4191602" version="3" timestamp="2013-01-07T15:14:05Z" changeset="14563533" uid="321042" user="species">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Stattegg,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Volksschule"/>
+    <tag k="name" v="Stattegg/Volksschule"/>
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="no"/>
   </node>
@@ -9688,7 +9649,7 @@
   <node id="1027914408" lat="47.0101242" lon="15.4038451" version="1" timestamp="2010-12-08T11:12:29Z" changeset="6583994" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Seiersberg,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Gemeindeamt"/>
+    <tag k="name" v="Seiersberg/Gemeindeamt"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="1027914412" lat="47.0162537" lon="15.4306421" version="1" timestamp="2010-12-08T11:12:30Z" changeset="6583994" uid="9605" user="a_uller">
@@ -9849,7 +9810,7 @@
   <node id="1027914583" lat="47.0102733" lon="15.4038209" version="1" timestamp="2010-12-08T11:12:39Z" changeset="6583994" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Seiersberg,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Gemeindeamt"/>
+    <tag k="name" v="Seiersberg/Gemeindeamt"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="1027914590" lat="47.0141065" lon="15.4234244" version="1" timestamp="2010-12-08T11:12:40Z" changeset="6583994" uid="9605" user="a_uller">
@@ -9955,12 +9916,6 @@
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Lebern,Feldkirchen bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Lebern"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="1028145890" lat="46.9648865" lon="15.4703961" version="3" timestamp="2012-10-31T09:50:57Z" changeset="13697017" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Kalsdorf bei Graz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="1028145942" lat="46.9857430" lon="15.4596194" version="7" timestamp="2013-07-23T11:50:51Z" changeset="17061025" uid="9605" user="a_uller">
@@ -10550,7 +10505,7 @@
     <tag k="bin" v="yes"/>
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Thal,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Brückenwaage"/>
+    <tag k="name" v="Thal/Brückenwaage"/>
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="no"/>
     <tag k="source" v="Bing"/>
@@ -11186,13 +11141,6 @@
     <tag k="name" v="Au"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="1161613064" lat="46.9800497" lon="15.3911618" version="2" timestamp="2013-08-09T17:05:14Z" changeset="17281827" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Premstätten-Tobelbad,Unterpremstätten,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="note" v="Bus Line: 692"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="1161651168" lat="47.0042230" lon="15.3848010" version="2" timestamp="2011-07-03T19:40:38Z" changeset="8622748" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Gedersberg"/>
@@ -11294,31 +11242,12 @@
     <tag k="name" v="Lehargasse"/>
     <tag k="note" v="Bus Line 202"/>
   </node>
-  <node id="1172617303" lat="47.2149231" lon="15.6299271" version="2" timestamp="2012-04-30T18:35:00Z" changeset="11463041" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Weiz"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="note" v="Bus Lines 200, 201, 203, 207, 220, 221"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="1172617308" lat="47.2145289" lon="15.6299721" version="1" timestamp="2011-02-25T17:24:02Z" changeset="7392361" uid="56870" user="StefanTiran">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Weiz"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="note" v="Bus Lines 200, 201, 202, 220, 221"/>
-  </node>
   <node id="1172617310" lat="47.2192519" lon="15.6333618" version="2" timestamp="2012-04-14T13:14:18Z" changeset="11298467" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Weiz,Weiz,Steiermark,Austria,Europe"/>
     <tag k="name" v="Gymnasium"/>
     <tag k="note" v="Bus Lines 200, 201, 203, 204"/>
     <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="1172617315" lat="47.2145297" lon="15.6302640" version="1" timestamp="2011-02-25T17:24:02Z" changeset="7392361" uid="56870" user="StefanTiran">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Weiz"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="note" v="Bus Lines 202, 204, 208"/>
   </node>
   <node id="1186181046" lat="46.9645233" lon="15.4790307" version="2" timestamp="2012-10-31T09:50:58Z" changeset="13697017" uid="9605" user="a_uller">
     <tag k="disused" v="yes"/>
@@ -11856,12 +11785,6 @@
     <tag k="name" v="Firma Graf"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="1244732380" lat="46.9324279" lon="15.4479910" version="2" timestamp="2013-07-25T13:06:19Z" changeset="17088618" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Kasten,Wundschuh,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Kaiserwaldweg"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="1244732386" lat="46.9464048" lon="15.4443574" version="2" timestamp="2013-07-25T13:06:19Z" changeset="17088618" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Gradenfeld,Wundschuh,Graz-Umgebung,Steiermark,Österreich,Europe"/>
@@ -12324,22 +12247,6 @@
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="no"/>
   </node>
-  <node id="1263943318" lat="47.0877326" lon="15.6573533" version="2" timestamp="2012-10-19T12:54:07Z" changeset="13556656" uid="9605" user="a_uller">
-    <tag k="bench" v="yes"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Laßnitzthal,Weiz,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="public_transport" v="platform"/>
-    <tag k="shelter" v="yes"/>
-  </node>
-  <node id="1263943324" lat="47.0874487" lon="15.6565013" version="2" timestamp="2012-10-19T12:54:07Z" changeset="13556656" uid="9605" user="a_uller">
-    <tag k="bench" v="yes"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Laßnitzthal,Weiz,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="public_transport" v="platform"/>
-    <tag k="shelter" v="yes"/>
-  </node>
   <node id="1263948366" lat="47.0761827" lon="15.6415778" version="2" timestamp="2012-10-19T12:54:14Z" changeset="13556656" uid="9605" user="a_uller">
     <tag k="bench" v="yes"/>
     <tag k="highway" v="bus_stop"/>
@@ -12496,24 +12403,6 @@
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Hausmannstätten,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Gasthaus Tieber"/>
-    <tag k="public_transport" v="platform"/>
-    <tag k="shelter" v="yes"/>
-  </node>
-  <node id="1273229198" lat="46.9959528" lon="15.2850845" version="2" timestamp="2013-08-30T13:28:52Z" changeset="17589385" uid="9605" user="a_uller">
-    <tag k="alt_name" v="Bahnhof Abzweigung"/>
-    <tag k="bench" v="yes"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Söding-Mooskirchen,Söding,Voitsberg,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="public_transport" v="platform"/>
-    <tag k="shelter" v="yes"/>
-  </node>
-  <node id="1273229216" lat="46.9958413" lon="15.2852688" version="2" timestamp="2013-08-30T13:28:52Z" changeset="17589385" uid="9605" user="a_uller">
-    <tag k="alt_name" v="Bahnhof Abzweigung"/>
-    <tag k="bench" v="yes"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Söding-Mooskirchen,Söding,Voitsberg,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="yes"/>
   </node>
@@ -12806,22 +12695,10 @@
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="no"/>
   </node>
-  <node id="1274520808" lat="46.9409062" lon="15.3340782" version="3" timestamp="2013-08-31T19:33:31Z" changeset="17608843" uid="321042" user="species">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Lannach"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="note" v="Bus Line 745"/>
-  </node>
   <node id="1274520811" lat="46.9597658" lon="15.3184725" version="3" timestamp="2013-08-30T13:28:54Z" changeset="17589385" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Hötschdorf,Lannach,Deutschlandsberg,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Gasthaus Weinzödl"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="1281882241" lat="46.9684479" lon="15.3458943" version="2" timestamp="2013-08-12T12:53:32Z" changeset="17316916" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Lieboch,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="1281882242" lat="46.9385446" lon="15.3603995" version="2" timestamp="2013-08-05T12:45:56Z" changeset="17227552" uid="9605" user="a_uller">
@@ -12830,12 +12707,6 @@
     <tag k="is_in" v="Muttendorf,Dobl,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Flurweg"/>
     <tag k="shelter" v="no"/>
-  </node>
-  <node id="1281882243" lat="46.9689020" lon="15.3457708" version="2" timestamp="2013-08-12T12:53:32Z" changeset="17316916" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Lieboch,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="public_transport" v="platform"/>
   </node>
   <node id="1281882245" lat="46.9448103" lon="15.3489712" version="1" timestamp="2011-05-12T18:02:33Z" changeset="8124673" uid="56870" user="StefanTiran">
     <tag k="highway" v="bus_stop"/>
@@ -12925,14 +12796,6 @@
     <tag k="name" v="Gruber"/>
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="no"/>
-  </node>
-  <node id="1290684954" lat="47.1778303" lon="15.3223444" version="2" timestamp="2012-03-09T14:09:43Z" changeset="10920343" uid="9605" user="a_uller">
-    <tag k="bench" v="yes"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Stübing,Deutschfeistritz,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="public_transport" v="platform"/>
-    <tag k="shelter" v="yes"/>
   </node>
   <node id="1290684962" lat="47.1788093" lon="15.3161736" version="2" timestamp="2012-03-09T14:09:47Z" changeset="10920343" uid="9605" user="a_uller">
     <tag k="bench" v="yes"/>
@@ -13209,12 +13072,6 @@
     <tag k="is_in" v="Albersdorf"/>
     <tag k="name" v="Sportplatz"/>
     <tag k="shelter" v="yes"/>
-  </node>
-  <node id="1351656664" lat="47.1513860" lon="15.6678463" version="2" timestamp="2011-07-06T18:43:12Z" changeset="8650899" uid="56870" user="StefanTiran">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="St. Ruprecht"/>
-    <tag k="name" v="Bahnhof"/>
-    <tag k="note" v="Bus Line 220"/>
   </node>
   <node id="1351656665" lat="47.1258828" lon="15.6948551" version="1" timestamp="2011-07-06T18:07:27Z" changeset="8650347" uid="56870" user="StefanTiran">
     <tag k="bench" v="no"/>
@@ -14663,13 +14520,6 @@
     <tag k="name" v="Riemer"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="1654708201" lat="47.0812379" lon="15.2578447" version="1" timestamp="2012-03-01T18:38:51Z" changeset="10840836" uid="9605" user="a_uller">
-    <tag k="fixme" v="position is a guess"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Sankt Bartholomä,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Waldhof"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="1654708202" lat="47.0829812" lon="15.2755834" version="1" timestamp="2012-03-01T18:38:52Z" changeset="10840836" uid="9605" user="a_uller">
     <tag k="fixme" v="position is a guess"/>
     <tag k="highway" v="bus_stop"/>
@@ -14818,13 +14668,6 @@
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Sankt Oswald bei Plankenwarth,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Umkehrschleife"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="1660629623" lat="47.0812006" lon="15.2577731" version="1" timestamp="2012-03-05T14:05:39Z" changeset="10879827" uid="9605" user="a_uller">
-    <tag k="fixme" v="position is a guess"/>
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Sankt Bartholomä,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Waldhof"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="1660629628" lat="47.0829420" lon="15.2756791" version="1" timestamp="2012-03-05T14:05:39Z" changeset="10879827" uid="9605" user="a_uller">
@@ -17822,12 +17665,6 @@
     <tag k="is_in" v="Gleisdorf"/>
     <tag k="name" v="Steinbergstraße 1"/>
     <tag k="operator" v="Schwarz"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="1979108225" lat="47.1001405" lon="15.7083433" version="1" timestamp="2012-10-23T08:30:56Z" changeset="13602483" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Gleisdorf,Weiz,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Bahnhof"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="1983068137" lat="47.0704655" lon="15.5291105" version="1" timestamp="2012-10-25T15:42:41Z" changeset="13628610" uid="9605" user="a_uller">
@@ -21066,7 +20903,6 @@
     <tag k="name" v="Gemeindeamt"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="2396221840" lat="46.9324102" lon="15.4477961" version="1" timestamp="2013-07-25T13:06:08Z" changeset="17088618" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Kasten,Wundschuh,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Kaiserwaldweg"/>
@@ -21370,12 +21206,6 @@
     <tag k="public_transport" v="platform"/>
     <tag k="shelter" v="yes"/>
   </node>
-  <node id="2415946605" lat="46.9724803" lon="15.3385601" version="1" timestamp="2013-08-12T12:51:04Z" changeset="17316916" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Lieboch,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Gemeindeamt"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
   <node id="2415946616" lat="46.9900025" lon="15.3042387" version="2" timestamp="2013-10-21T11:27:08Z" changeset="18467051" uid="321042" user="species">
     <tag k="bench" v="yes"/>
     <tag k="bin" v="yes"/>
@@ -21584,23 +21414,9 @@
     <tag k="name" v="Feldbauer"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="2428414396" lat="47.0626076" lon="15.2960256" version="1" timestamp="2013-08-22T18:20:11Z" changeset="17459654" uid="9605" user="a_uller">
-    <tag k="fixme" v="check position"/>
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Rohrbach bei Graz,Rohrbach-Steinberg,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Gemeindeamt"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="2428414401" lat="47.0626821" lon="15.2959545" version="1" timestamp="2013-08-22T18:20:11Z" changeset="17459654" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Rohrbach bei Graz,Rohrbach-Steinberg,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Gemeindeamt"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="2428414405" lat="47.0447663" lon="15.3087890" version="1" timestamp="2013-08-22T18:20:11Z" changeset="17459654" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Niederberg,Hitzendorf,Graz-Umgebung,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Higgersberger"/>
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="2428414410" lat="47.0456405" lon="15.3094509" version="1" timestamp="2013-08-22T18:20:11Z" changeset="17459654" uid="9605" user="a_uller">
@@ -21794,7 +21610,6 @@
     <tag k="name" v="Brückenwaage"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="2429226244" lat="47.0356699" lon="15.2993694" version="1" timestamp="2013-08-23T14:28:30Z" changeset="17470794" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Hitzendorf,Graz-Umgebung,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Brückenwaage"/>
@@ -22531,7 +22346,6 @@
     <tag k="name" v="Roth"/>
     <tag k="public_transport" v="platform"/>
   </node>
-  <node id="2433842268" lat="46.9833286" lon="15.3632041" version="1" timestamp="2013-08-27T12:56:26Z" changeset="17535913" uid="9605" user="a_uller">
     <tag k="fixme" v="check position"/>
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Tobelbad,Haselsdorf-Tobelbad,Graz-Umgebung,Steiermark,Österreich,Europe"/>
@@ -22739,12 +22553,6 @@
     <tag k="public_transport" v="platform"/>
   </node>
   <node id="2439121351" lat="46.9644083" lon="15.3103468" version="1" timestamp="2013-08-30T13:28:18Z" changeset="17589385" uid="9605" user="a_uller">
-    <tag k="highway" v="bus_stop"/>
-    <tag k="is_in" v="Hötschdorf,Lannach,Deutschlandsberg,Steiermark,Österreich,Europe"/>
-    <tag k="name" v="Kapelle"/>
-    <tag k="public_transport" v="platform"/>
-  </node>
-  <node id="2439121352" lat="46.9645049" lon="15.3103723" version="1" timestamp="2013-08-30T13:28:18Z" changeset="17589385" uid="9605" user="a_uller">
     <tag k="highway" v="bus_stop"/>
     <tag k="is_in" v="Hötschdorf,Lannach,Deutschlandsberg,Steiermark,Österreich,Europe"/>
     <tag k="name" v="Kapelle"/>
@@ -23542,7 +23350,7 @@
     <schedule>07 48</schedule>
     <member type="node" ref="1434087979"  name="Kötschberg" traveltime="1"/>
     <member type="node" ref="1067360152"  name="Unterthal" traveltime="2"/>
-    <member type="node" ref="1067360195"  name="Brückenwaage" traveltime="1"/>
+    <member type="node" ref="1067360195"  name="Thal/Brückenwaage" traveltime="1"/>
     <member type="node" ref="1067360084"  name="Thalkreuz" traveltime="1"/>
     <member type="node" ref="1067360068"  name="Unterbichl" traveltime="0"/>
     <member type="node" ref="1067360131"  name="Thalmühle" traveltime="1"/>
@@ -23585,7 +23393,7 @@
     <tag k="to" v="Hauptbahnhof"/>
     <tag k="type" v="route"/>
     <schedule>00 15 30 45 59</schedule>
-    <member type="node" ref="289079882"  name="Zentralfriedhof" traveltime="1"/>
+    <member type="node" ref="289079876"  name="Zentralfriedhof" traveltime="1"/>
     <member type="node" ref="289079663"  name="Pfarrzentrum St. Johannes" traveltime="1"/>
     <member type="node" ref="288385359"  name="Auf der Tändelwiese" traveltime="0"/>
     <member type="node" ref="992768853"  name="Feldgasse" traveltime="1"/>
@@ -23701,7 +23509,7 @@
     <member type="node" ref="1020217455"  name="Neudorf" traveltime="1"/>
     <member type="node" ref="1020217754"  name="Dorfplatz" traveltime="1"/>
     <member type="node" ref="1020218359"  name="Sonnenhang-Stattegg" traveltime="1"/>
-    <member type="node" ref="1020217840"  name="Volksschule" traveltime="1"/>
+    <member type="node" ref="1020217840"  name="Stattegg/Volksschule" traveltime="1"/>
     <member type="node" ref="1020215803"  name="Huberwirt" traveltime="0"/>
     <member type="node" ref="1020216415"  name="Hub-Mitte" traveltime="1"/>
     <member type="node" ref="1020217154"  name="Hub" traveltime="0"/>
@@ -23819,7 +23627,7 @@
     <member type="node" ref="960600201"  name="Peterstalstraße" traveltime="1"/>
     <member type="node" ref="960600198"  name="Kaiserwirt" traveltime="1"/>
     <member type="node" ref="960600197"  name="Sonnenhang" traveltime="1"/>
-    <member type="node" ref="960600202"  name="Kapelle" traveltime="2"/>
+    <member type="node" ref="960600202"  name="Graz/Kapelle" traveltime="2"/>
     <member type="node" ref="753021990"  name="Waltendorfer Schule" traveltime="1"/>
     <member type="node" ref="289917635"  name="Schörgelgasse" traveltime="3"/>
     <member type="node" ref="289917377"  name="Krenngasse" traveltime="2"/>
@@ -23837,7 +23645,7 @@
     <member type="node" ref="2018522779"  name="Schörgelgasse" traveltime="1"/>
     <member type="node" ref="289917648"  name="Waltendorfer Hauptstraße" traveltime="2"/>
     <member type="node" ref="753021987"  name="Waltendorfer Schule" traveltime="1"/>
-    <member type="node" ref="753022001"  name="Kapelle" traveltime="1"/>
+    <member type="node" ref="753022001"  name="Graz/Kapelle" traveltime="1"/>
     <member type="node" ref="753021984"  name="Sonnenhang" traveltime="2"/>
     <member type="node" ref="753021998"  name="Kaiserwirt" traveltime="0"/>
     <member type="node" ref="753021993"  name="Peterstalstraße" traveltime="1"/>
@@ -24306,7 +24114,7 @@
     <member type="node" ref="288385353"  name="Feldgasse" traveltime="2"/>
     <member type="node" ref="288385354"  name="Auf der Tändelwiese" traveltime="1"/>
     <member type="node" ref="289079636"  name="Pfarrzentrum St. Johannes" traveltime="1"/>
-    <member type="node" ref="289079876"  name="Zentralfriedhof" traveltime="1"/>
+    <member type="node" ref="289079882"  name="Zentralfriedhof" traveltime="1"/>
   </relation>
 
   <!-- 68 -->
@@ -24606,7 +24414,7 @@
     <tag k="to" v="Liebenau/Murpark"/>
     <tag k="type" v="route"/>
     <schedule>00 20 40</schedule>
-    <member type="node" ref="652453409"  name="Sparischmied" traveltime="1"/>
+    <member type="node" ref="773928786"  name="Sparischmied" traveltime="1"/>
     <member type="node" ref="773928734"  name="Raaba/Kreisverkehr" traveltime="1"/>
     <member type="node" ref="652453406"  name="Prinzhoferweg" traveltime="1"/>
     <member type="node" ref="774560544"  name="Center Ost" traveltime="1"/>
@@ -24640,7 +24448,7 @@
     <member type="node" ref="288379423"  name="Köglerweg" traveltime="1"/>
     <member type="node" ref="288379421"  name="Raaba/Kreisverkehr" traveltime="2"/>
     <member type="node" ref="774492923"  name="Bahnhof" traveltime="1"/>
-    <member type="node" ref="774547978"  name="Gemeindeamt" traveltime="1"/>
+    <member type="node" ref="774547978"  name="Grambach/Gemeindeamt" traveltime="1"/>
     <member type="node" ref="1110427330"  name="Gärtnerei Leitner" traveltime="1"/>
   </relation>
   <relation id="539252" version="37" timestamp="2013-09-22T16:00:01Z" changeset="17976147" uid="56870" user="StefanTiran">
@@ -24653,8 +24461,8 @@
     <tag k="to" v="Schulzentrum St. Peter"/>
     <tag k="type" v="route"/>
     <schedule>22</schedule>
-    <member type="node" ref="1110427154"  name="Gärtnerei Leitner" traveltime="1"/>
-    <member type="node" ref="601643561"  name="Gemeindeamt" traveltime="1"/>
+    <member type="node" ref="1110427330"  name="Gärtnerei Leitner" traveltime="1"/>
+    <member type="node" ref="774547978"  name="Grambach/Gemeindeamt" traveltime="1"/>
     <member type="node" ref="288379415"  name="Bahnhof" traveltime="1"/>
     <member type="node" ref="288379418"  name="Bründlweg" traveltime="1"/>
     <member type="node" ref="288379419"  name="Raaba/Kreisverkehr" traveltime="1"/>
@@ -24734,7 +24542,7 @@
     <member type="node" ref="1027914593"  name="Jochen-Rindt-Straße" traveltime="1"/>
     <member type="node" ref="1027914546"  name="Karl-May-Straße" traveltime="1"/>
     <member type="node" ref="1027914525"  name="Shopping City" traveltime="1"/>
-    <member type="node" ref="1027914583"  name="Gemeindeamt" traveltime="2"/>
+    <member type="node" ref="1027914583"  name="Seiersberg/Gemeindeamt" traveltime="2"/>
     <member type="node" ref="287835244"  name="Seiersberg" traveltime="2"/>
     <member type="node" ref="1027914541"  name="Abzweigung Gerambstraße" traveltime="1"/>
     <member type="node" ref="1027914524"  name="Abzweigung Grünlandweg" traveltime="1"/>
@@ -24760,7 +24568,7 @@
     <member type="node" ref="1027914413"  name="Abzweigung Grünlandweg" traveltime="0"/>
     <member type="node" ref="1027914489"  name="Abzweigung Gerambstraße" traveltime="1"/>
     <member type="node" ref="763448705"  name="Seiersberg" traveltime="2"/>
-    <member type="node" ref="1027914408"  name="Gemeindeamt" traveltime="2"/>
+    <member type="node" ref="1027914408"  name="Seiersberg/Gemeindeamt" traveltime="2"/>
     <member type="node" ref="1027914477"  name="Shopping City" traveltime="2"/>
     <member type="node" ref="1027914575"  name="Karl-May-Straße" traveltime="1"/>
     <member type="node" ref="1027914429"  name="Jochen-Rindt-Straße" traveltime="1"/>

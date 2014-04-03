@@ -21,6 +21,7 @@ import pdb
 
 import matplotlib
 matplotlib.use('GTKAgg')
+from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -104,14 +105,13 @@ class Network(object):
                 skip = False
             if skip:
                 continue
-
             # get the stops for each route and build the graph
             n_from = None
             for line in rel.split('\n'):
                 if 'traveltime' in line:
                     sid = re.findall(r'ref="([0-9]+)', line)[0]
-                    if sid in ['458195176']:  # fix for an OSM inconsistency
-                        continue
+                    # if sid in ['458195176']:  # fix for an OSM inconsistency
+                    #     continue
                     if lines:  # add line-specific nodes (e.g., Don Bosco (33))
                         n_to = copy.deepcopy(name2node[id2name[sid]])
                         n_to.name += ' (' + title + ')'
@@ -238,11 +238,50 @@ class Network(object):
                 if n != m and dist <= 500:
                     self.graph.add_edge(n, m, weight=dist/speed)
 
-    def print_centralities(self, nc, top=20):
+    def print_centralities(self, nc, top=10):
         """print the nodes with the highest centrality values"""
-        for n in sorted(nc.iteritems(), key=operator.itemgetter(1))[:top]:
-            print '%.3f' % n[1], n[0].name
+        for i, n in enumerate(sorted(nc.iteritems(),
+                                     key=operator.itemgetter(1))[:top]):
+            print i+1, '%.2f' % n[1], n[0].name
         print '-----------------------------------------'
+        self.plot_centralities(nc)
+
+    def plot_network(self):
+        """plot the network"""
+        fig, axes = plt.subplots(1)
+        for e, f in self.graph.edges():
+            line = plt.Line2D((e.lon, f.lon), (e.lat, f.lat),
+                              color='#142129', lw=2)
+            plt.gca().add_line(line)
+        for n in self.graph:
+            circle = plt.Circle((n.lon, n.lat), radius=0.0015,
+                                alpha=1, color='#2B83BA')
+            plt.gca().add_patch(circle)
+            # text = plt.Text(n.lon, n.lat, n.id + n.name)
+            # plt.gca().add_artist(text)
+        plt.axis('scaled')
+        plt.axis('off')
+        plt.savefig('network.svg')
+
+    def plot_centralities(self, nc, top=10):
+        """plot the nodes with the highest centralities
+           before drawing, convert into the Mercator projection
+           the resulting plot can then manually be fit onto an OSM plot
+        """
+        x, y = [], []
+        for i, n in enumerate(sorted(nc.iteritems(),
+                                     key=operator.itemgetter(1))[:top]):
+            x.append(n[0].lon)
+            y.append(n[0].lat)
+
+        m = Basemap(llcrnrlon=15.25, llcrnrlat=47.00,
+                    urcrnrlon=15.55, urcrnrlat=47.15,
+                    lat_ts=20,  resolution='h', projection='merc',
+                    lon_0=15, lat_0=47)
+        x1, y1 = m(x, y)
+        m.drawmapboundary(fill_color='white')
+        m.scatter(x1, y1, s=150, c='#D7191C', marker='o', linewidth='0')
+        plt.show()
 
     def closeness_centrality(self):
         """calculate the closeness centrality
@@ -393,6 +432,7 @@ if __name__ == '__main__':
         'data/osm_sbahn_traveltimes.xml'
     ], lines=False)
     print len(Graz.graph), 'nodes,', len(Graz.graph.edges()), 'edges'
+    Graz.plot_network()
     Graz.closeness_centrality()
     Graz.geo_closeness_centrality()
 
